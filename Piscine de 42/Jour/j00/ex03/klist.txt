@@ -1,0 +1,6 @@
+Credentials cache: API:C1F40DB6-0632-41FF-89D1-0D57F445F9C7
+        Principal: jsivanes@42.FR
+
+  Issued                Expires               Principal
+Oct 13 17:46:37 2015  Oct 20 17:46:25 2015  krbtgt/42.FR@42.FR
+Oct 13 17:47:46 2015  Oct 20 17:46:25 2015  host/vogsphere-frontend-normal-1.42.fr@42.FR
