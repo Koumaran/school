@@ -1,26 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/10/11 13:34:49 by jsivanes          #+#    #+#             */
+/*   Updated: 2016/10/11 15:21:54 by jsivanes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
 int		check_connect(t_lem *lem, t_string *str, char *line)
 {
-	dprintf(1, "connect\n");
-	return (1);
-}
-
-int		check_room(t_lem *lem, t_string *string, char *line)
-{
 	char	**split;
 
-	dprintf(1, "room\n");
-	if (ft_nb_of_word(line, ' ') != 3)
+	dprintf(1, "connect\n");
+	if (ft_nb_of_word(line, '-') != 2 || !(split = ft_strsplit(line, '-')))
 		return (0);
-	split = ft_strsplit(line, ' ');
-	if (!lem->room)
-	return (1);
-}
-
-int		get_sharp(t_lem *lem, t_string *string, char *line)
-{
-	dprintf(1, "sharp\n");
+	if (!check_room_name(lem, split[0]) || !check_room_name(lem, split[1]))
+		return (0);
+	add_connection(split[0], split[1]);
 	return (1);
 }
 
@@ -43,7 +44,7 @@ int		check_param(t_lem *lem, t_string *string)
 		else if (*line == '#')
 			ret = get_sharp(lem, string, line);
 		else
-			ret = check_room(lem, string, line);
+			ret = check_room(lem, line);
 		if (ret == 0)
 			return (0);
 		ft_strdel(&line);
