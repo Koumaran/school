@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 15:46:07 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/11 14:39:06 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/13 18:57:03 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void				ft_putchar(char c);
 void				*ft_memset(void *str, int c, size_t n);
 void				ft_bzero(void *str, size_t n);
 void				*ft_memcpy(void *dst, void const *src, size_t n);
+void				**ft_memcpy_tab(void **src, void **dest, size_t n);
 void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t n);
 void				*ft_memchr(const void *str, int c, size_t n);

@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:06:35 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/11 15:21:57 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/13 18:13:03 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		check_room(t_lem *lem, char *line)
 		|| !check_number(split[2]) || !add_room(lem, split))
 		return (0);
 	ft_memfree_2d(split);
+	lem->nb_room += 1;
 	return (1);
 }
 
