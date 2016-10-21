@@ -12,11 +12,10 @@
 
 #include "lemin.h"
 
-int		check_connect(t_lem *lem, t_string *str, char *line)
+int		check_connect(t_lem *lem, char *line)
 {
 	char	**split;
 
-	dprintf(1, "connect\n");
 	if (lem->nb_room < 2 || ft_nb_of_word(line, '-') != 2 ||
 			!(split = ft_strsplit(line, '-')))
 		return (0);
@@ -54,7 +53,7 @@ int		check_param(t_lem *lem, t_string *string)
 	{
 		ft_stringaddnl(string, line, ft_strlen(line));
 		if (ft_strchr(line, '-') && *line != '-')
-			ret = check_connect(lem, string, line);
+			ret = check_connect(lem, line);
 		else if (*line == '#')
 			ret = get_sharp(lem, string, line);
 		else
@@ -74,10 +73,9 @@ int		main()
 
 	ft_stringinit(&string);
 	ft_bzero(&lem, sizeof(t_lem));
-	if (check_param(&lem, &string) == 0 || get_join(&lem))
+	if (check_param(&lem, &string) == 0 || get_join(&lem) == 0)
 		ft_error("error");
 	ft_putstr(string.content);
 	dprintf(1, "nb_room=%d, nb_ant=%d\n", lem.nb_room, lem.nb_ant);
-//	resolve_lemin(&lem);
 	return (0);
 }

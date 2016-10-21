@@ -59,5 +59,6 @@ int				create_connection(t_lem *lem, char *from, char *to);
 int				get_sharp(t_lem *lem, t_string *string, char *line);
 int				check_room(t_lem *lem, char *line);
 int				check_room_name(t_lem *lem, char *str);
+int				get_join(t_lem *lem);
 
 #endif

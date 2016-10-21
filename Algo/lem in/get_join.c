@@ -40,39 +40,49 @@ char		**join_to_room(t_lem *lem, char *name, int *len)
 	return (connect);
 }
 
-void	check_join(t_lem *lem, char **name)
+void	check_join(t_lem *lem, t_room *room)
 {
-	t_room		*room;
-	t_room		*tmp;
-	int			nb;
+	t_room		**tmp;
 	int			i;
+	int		*nb;
 
-	room = lem->room;
-	nb = 0;
-	while (room && ft_strcmp(room->name, *name) != 0)
-		room = room->next;
-	tmp = room;
+	tmp = (t_room**)malloc(sizeof(t_room) * room->len);
+	nb = (int*)malloc(sizeof(int) * room->len);
 	i = -1;
-	while (++i < tmp->len)
+	while (++i < room->len)
+		tmp[i] = get_all_join(lem, room, room->connect[i], &nb[i]);
+	while (--i >= 0)
 	{
-		tmp = 
+		while (tmp[i])
+		{
+			printf("nqme=%s\n", tmp->name);
+			tmp[i] = tmp[i]->next;
+		}
+		printf("fin\n");
 	}
+	
+	
 }
 
 int		get_join(t_lem *lem)
 {
 	t_room		*room;
 	int			len;
-	char		*name;
 
 	room = lem->room;
 	while (room)
 	{
 		room->connect = join_to_room(lem, room->name, &room->len);
+		if (ft_strcmp(room->name, lem->start) == 0 && room->len == 0)
+			return (0);
+		else if (ft_strcmp(room->name, lem->end) == 0 && room->len == 0)
+			return (0);
 		room = room->next;
 	}
-	name = lem->start;
-	check_join(lem, &name);
+	room = lem->room;
+	while (room && ft_strcmp(room->name, lem->start) != 0)
+		room = room->next;
+	check_join(lem, room);
 	if (ft_strcmp(name, lem->end) != 0)
 		return (0);
 	return (1);
