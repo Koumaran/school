@@ -26,10 +26,37 @@ t_room		*new_room(char	**str)
 	return (room);
 }
 
-int		add_room(t_lem *lem, char **split)
+int		ft_pushfront_room(t_lem *lem, char **split)
 {
 	t_room		*tmp;
+	t_room		*tmp2;
 
+	if (lem->room)
+	{
+		tmp2 = new_room(split);
+		tmp = lem->room;
+		while (tmp)
+		{
+			if (tmp->name && ft_strcmp(tmp->name, tmp2->name) == 0)
+				return (0);
+			tmp = tmp->next;
+		}
+		tmp2->next = lem->room;
+		lem->room = tmp2;
+	}
+	else
+		lem->room = new_room(split);
+	return (1);
+}
+
+int		add_room(t_lem *lem, char **split, int start)
+{
+	t_room		*tmp;
+	t_room		*end;
+
+	if (start == 1)
+		return (ft_pushfront_room(lem, split));
+	end = NULL;
 	if (lem->room)
 	{
 		tmp = lem->room;
@@ -40,8 +67,15 @@ int		add_room(t_lem *lem, char **split)
 			tmp = tmp->next;
 			if (tmp->name && ft_strcmp(tmp->name, *split) == 0)
 				return (0);
+			if (lem->end && ft_strcmp(tmp->next->name, lem->end) == 0)
+			{
+				end = tmp->next;
+				tmp->next = NULL;
+			}
 		}
 		tmp->next = new_room(split);
+		if (end)
+			tmp->next->next = end;
 	}
 	else
 		lem->room = new_room(split);

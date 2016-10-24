@@ -37,7 +37,7 @@ int		check_room_name(t_lem *lem, char *str)
 	return (0);
 }
 
-int		check_room(t_lem *lem, char *line)
+int		check_room(t_lem *lem, char *line, int lvl)
 {
 	char	**split;
 
@@ -45,7 +45,7 @@ int		check_room(t_lem *lem, char *line)
 		return (0);
 	split = ft_strsplit(line, ' ');
 	if (split[0][0] == 'L' || !check_number(split[1])
-		|| !check_number(split[2]) || !add_room(lem, split))
+		|| !check_number(split[2]) || !add_room(lem, split, lvl))
 		return (0);
 	ft_memfree_2d(split);
 	lem->nb_room += 1;
@@ -58,7 +58,7 @@ int		get_sharp(t_lem *lem, t_string *string, char *line)
 	{
 		get_next_line(0, &line);
 		ft_stringaddnl(string, line, ft_strlen(line));
-		if (!check_room(lem, line))
+		if (!check_room(lem, line, 1))
 			return (0);
 		lem->start = ft_strsub(line, 0, ft_strchri(line, ' '));
 	}
@@ -66,7 +66,7 @@ int		get_sharp(t_lem *lem, t_string *string, char *line)
 	{
 		get_next_line(0, &line);
 		ft_stringaddnl(string, line, ft_strlen(line));
-		if (!check_room(lem, line))
+		if (!check_room(lem, line, 0))
 			return (0);
 		lem->end = ft_strsub(line, 0, ft_strchri(line, ' '));
 	}

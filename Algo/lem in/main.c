@@ -57,7 +57,7 @@ int		check_param(t_lem *lem, t_string *string)
 		else if (*line == '#')
 			ret = get_sharp(lem, string, line);
 		else
-			ret = check_room(lem, line);
+			ret = check_room(lem, line, 0);
 		if (ret == 0)
 			return (0);
 		ft_strdel(&line);

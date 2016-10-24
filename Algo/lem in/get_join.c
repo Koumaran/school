@@ -50,7 +50,7 @@ void	check_join(t_lem *lem, t_room *room)
 	nb = (int*)malloc(sizeof(int) * room->len);
 	i = -1;
 	while (++i < room->len)
-		tmp[i] = get_all_join(lem, room, room->connect[i], &nb[i]);
+		tmp[i] = resolve_lem(lem, room, room->connect[i], &nb[i]);
 	while (--i >= 0)
 	{
 		while (tmp[i])
@@ -59,9 +59,7 @@ void	check_join(t_lem *lem, t_room *room)
 			tmp[i] = tmp[i]->next;
 		}
 		printf("fin\n");
-	}
-	
-	
+	}	
 }
 
 int		get_join(t_lem *lem)
