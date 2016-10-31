@@ -6,15 +6,15 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:16:57 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/07/13 16:48:07 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:41:49 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(char const *s)
+t_long		ft_atoi(char const *s)
 {
-	int		v;
+	t_long		v;
 	char	negative;
 
 	v = 0;

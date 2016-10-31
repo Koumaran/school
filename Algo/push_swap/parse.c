@@ -6,11 +6,18 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/13 19:21:36 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/23 16:09:55 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:38:08 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+void		get_extrem_box(t_box *box, t_nb *pile)
+{
+	box->max = ft_big_elem(pile);
+	box->min = ft_small_elem(pile);
+	box->len = get_len(pile, &box->midl);
+}
 
 t_flag			*add_flag_sw(char *str, t_flag *flag)
 {
@@ -44,7 +51,7 @@ t_box			parse_swap(t_flag *flag, char **av, t_box *box, int y)
 		tab = ft_strsplit(*av++, ' ');
 		while (*tab)
 		{
-			if (!ft_strncmp(*tab, "-v", 2) || !ft_strncmp(*tab, "-h", 2) ||
+			if (!ft_strncmp(*tab, "-v", 2) ||
 					!ft_strncmp(*tab, "-c", 2) || !ft_strncmp(*tab, "-r", 2))
 				flag = add_flag_sw(*tab, flag);
 			else

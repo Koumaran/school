@@ -6,15 +6,19 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:12:09 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/04/22 16:58:28 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/29 12:01:28 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_memfree_2d(char **map, size_t n)
+void	ft_memfree_2d(char **map)
 {
-	while (n--)
-		free(*(map++));
+	int		i;
+
+	i = -1;
+	while (map[++i])
+		free(map[i]);
+	free(map);
 	map = NULL;
 }

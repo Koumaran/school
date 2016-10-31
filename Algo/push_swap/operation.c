@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/14 16:30:32 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/17 15:10:39 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/29 12:18:08 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static	void	print_checkervector(char **str)
 	}
 }
 
-int				operation(t_nb **a, t_nb *b, t_flag *flag, char *str)
+int				operation(t_box *box, t_flag *flag, t_string *string)
 {
 	t_opp		opp[11];
 	char		*line;
@@ -70,15 +70,16 @@ int				operation(t_nb **a, t_nb *b, t_flag *flag, char *str)
 			i++;
 		if (i == 11)
 			ft_error("\033[31mError");
-		opp[i].get_op(a, &b, flag, &str);
+		ft_stringinit(string);
+		opp[i].get_op(box, flag, string);
 		if (flag->v)
-			print_checkervector(ft_strsplit(str, '\n'));
+			print_checkervector(ft_strsplit(string->content, '\n'));
 		ft_strdel(&line);
-		ft_strdel(&str);
+		ft_stringdelete(string);
 	}
-	if (b)
+	if (box->b)
 		ft_error("\033[31mKO");
 	if (flag->r == 1)
-		return (check_good_r(*a));
-	return (check_good(*a));
+		return (check_good_r(box->a));
+	return (check_good(box->a));
 }

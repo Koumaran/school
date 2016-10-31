@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:06:23 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/17 16:04:32 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/29 12:18:06 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,52 @@ static t_nb		*push_list_to_head(t_nb *tab, t_nb *list)
 	return (list);
 }
 
-void			pa(t_nb **a, t_nb **b, t_flag *flag, char **str)
+void			pa(t_box *box, t_flag *flag, t_string *string, int from)
 {
 	t_nb	*tmp;
+	t_nb	*to_move;
 
-	if (b && *b)
+	if (box->b)
 	{
-		*str = JN(*str, DP("=pa\n"));
-		tmp = *b;
-		if ((*b)->next != *b)
+		tmp = box->b;
+		to_move = box->b;
+		if (tmp->next != tmp->b)
 		{
-			*b = (*b)->next;
-			(*b)->previus = tmp->previus;
-			tmp->previus->next = *b;
+			tmp = tmp->next;
+			tmp->previus = to_move->previus;
+			tmp2->previus->next = tmp;
 		}
 		else
-			*b = NULL;
-		*a = push_list_to_head(*a, tmp);
+			box->b = NULL;
+		box->a = push_list_to_head(box->a, to_move);
+		if (from == 1)
+			ft_stringaddnl(string, "=pa", 3);
 		if (flag && flag->v)
-			print_option_sw(*a, *b, str);
+			print_option_sw(box->a, box->b, string);
 	}
 }
 
-void			pb(t_nb **a, t_nb **b, t_flag *flag, char **str)
+void			pb(t_box *box, t_flag *flag, t_string *string, int from)
 {
 	t_nb	*tmp;
+	t_nb	*to_move;
 
-	if (a && *a)
+	if (box->a)
 	{
-		*str = JN(*str, DP("=pb\n"));
-		tmp = *a;
-		if ((*a)->next != *a)
+		if (from == 1)
+			ft_stringaddnl(string, "=pb", 3);
+		tmp = box->a;
+		to_move = box->a;
+		if (tmp->next != tmp)
 		{
-			*a = (*a)->next;
-			(*a)->previus = tmp->previus;
-			tmp->previus->next = *a;
+			tmp = tmp->next;
+			tmp->previus = to_move->previus;
+			to_move->previus->next = tmp;
 		}
 		else
-			*a = NULL;
-		*b = push_list_to_head(*b, tmp);
+			box->a = NULL;
+		box->b = push_list_to_head(box->b, to_move);
 		if (flag && flag->v)
-			print_option_sw(*a, *b, str);
+			print_option_sw(box->a, box->b, string);
 	}
 }

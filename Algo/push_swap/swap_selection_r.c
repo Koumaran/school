@@ -6,91 +6,53 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/17 17:03:49 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/23 16:00:40 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:07:31 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static int		ft_max2(t_nb *tab, int max)
+static int		get_upper_mid(t_box *box, int mid)
 {
-	int		x;
 	t_nb	*tmp;
+	int		count;
 
-	x = tab->nb;
-	tmp = tab->next;
-	while (tmp != tab)
+	tmp = box->a->next;;
+	count = 0;
+		if (box->a->nb > mid)
+			count++;
+	while (tmp != box->a)
 	{
-		if (tmp->nb != max && x < tmp->nb)
-			x = tmp->nb;
+		if (tmp->nb > mid)
+			count++;
 		tmp = tmp->next;
 	}
-	return (x);
+	return (count);
 }
 
-static int		get_position(t_nb *a, int nb)
+void			swap_select_r(t_box *box, t_flag *flag, t_string *string)
 {
-	t_nb	*tmp;
-	int		pos;
+	int			mid;
+	int			count;
 
-	pos = 2;
-	tmp = a->next;
-	while (tmp->nb != nb)
+	mid = box->max;
+	while (box->a)
 	{
-		pos++;
-		tmp = tmp->next;
-	}
-	return (pos);
-}
-
-static t_box	*get_max(t_box *box, char **str, t_flag *flag, t_nb **a)
-{
-	t_nb	*tmp;
-	int		max;
-	int		max2;
-	int		position;
-
-	max = ft_max(*a);
-	max2 = ft_max2(*a, max);
-	tmp = (*a)->next;
-	if ((*a)->nb == max)
-		return (box);
-	tmp = *a;
-	while ((*a)->nb != max)
-	{
-		position = get_position(*a, max);
-		if (position == 2)
-			sa(a, &box->b, flag, str);
-		else if ((*a)->nb == max2 && box->len > 2)
-			pb(a, &box->b, flag, str);
-		else if (position <= box->midl)
-			ra(a, &box->b, flag, str);
-		else if (position > box->midl)
-			rra(a, &box->b, flag, str);
-	}
-	return (box);
-}
-
-char			*swap_selection_r(t_box *box, t_flag *flag)
-{
-	char	*str;
-
-	str = ft_strnew(0);
-	while (!check_good_r(box->a) || box->b)
-	{
-		box = init_box(box, box->a);
-		box = get_max(box, &str, flag, &box->a);
-		if (!check_good_r(box->a) && box->a->nb == box->max)
-		{
-			pb(&box->a, &box->b, flag, &str);
-			if (box->b && box->b->next != box->b)
+		mid -= (box->len > 100) ? 35 : 15;
+		count = get_upper_mid(box, mid);
+		while (box->a && count)
+			if (box->a->nb >= mid)
 			{
-				if (box->b->nb > box->b->next->nb)
-					sb(&box->a, &box->b, flag, &str);
+				pb(&box->a, &box->b, flag, string);
+				count--;
 			}
-		}
-		if (check_good_r(box->a) && box->b)
-			pa(&box->a, &box->b, flag, &str);
+			else
+				ra(&box->a, &box->b, flag, string);
+		box->len = get_len(box->a, &box->midl);
 	}
-	return (str);
+	while (box->b)
+	{
+		rotate_well_b(box, flag, string, ft_small_elem(box->b));
+		pa(&box->a, &box->b, flag, string);
+	}
 }

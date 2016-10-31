@@ -6,72 +6,70 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 13:43:11 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/23 16:13:58 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:07:22 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static int		get_position(t_nb *a, int nb)
+int			get_under_mid(t_box *box, int mid)
 {
 	t_nb	*tmp;
-	int		pos;
+	int		count;
 
-	pos = 2;
-	tmp = a->next;
-	while (tmp->nb != nb)
+	tmp = box->a;
+	count = 0;
+	if (tmp->nb < mid)
+		count++;
+	tmp = tmp->next;
+	while (tmp != box->a)
 	{
-		pos++;
+		if (tmp->nb < mid)
+			count++;
 		tmp = tmp->next;
 	}
-	return (pos);
+	return (count);
 }
 
-static t_box	*get_min(t_box *box, char **str, t_flag *flag, t_nb **a)
+void		rotate_well_b(t_box *box, t_flag *flag, t_string *string, int nb)
 {
-	int		min;
-	int		min2;
-	int		position;
-
-	min = ft_min(*a);
-	min2 = ft_min2(*a, min);
-	if ((*a)->nb == min)
-		return (box);
-	while ((*a)->nb != min)
-	{
-		position = get_position(*a, min);
-		if (position == 2)
-			sa(a, &box->b, flag, str);
-		else if ((*a)->nb == min2 && box->len > 2)
-			pb(a, &box->b, flag, str);
-		else if (position <= box->midl)
-			ra(a, &box->b, flag, str);
-		else if (position > box->midl)
-			rra(a, &box->b, flag, str);
-	}
-	return (box);
+	int		pos;
+	
+	box->len = get_len(box->b, &box->midl);
+	pos = get_position(box->b, nb);
+	if (pos >= box->midl)
+		while (box->b->nb != nb)
+			rrb(&box->a, &box->b, flag, string);
+	else
+		while (box->b->nb != nb)
+			rb(&box->a, &box->b, flag, string);
 }
 
-char			*swap_selection(t_box *box, t_flag *flag)
+void		swap_select(t_box *box, t_flag *flag, t_string *string)
 {
-	char	*str;
+	int		mid;
+	int		count;
 
-	str = ft_strnew(0);
-	while (!check_good(box->a) || box->b)
+	mid = box->min;
+	while (box->a)
 	{
-		box = init_box(box, box->a);
-		box = get_min(box, &str, flag, &box->a);
-		if (!check_good(box->a))
+		mid += (box->len > 100) ? 35 : 15;
+		count = get_under_mid(box, mid);
+		while (box->a && count)
 		{
-			pb(&box->a, &box->b, flag, &str);
-			if (box->b && box->b->next != box->b)
+			if (box->a->nb <= mid)
 			{
-				if (box->b->nb < box->b->next->nb)
-					sb(&box->a, &box->b, flag, &str);
+				pb(&box->a, &box->b, flag, string);
+				count--;
 			}
+			else
+				ra(&box->a, &box->b, flag, string);
 		}
-		if (check_good(box->a) && box->b)
-			pa(&box->a, &box->b, flag, &str);
+		box->len = get_len(box->a, &box->midl);
 	}
-	return (str);
+	while (box->b)
+	{
+		rotate_well_b(box, flag, string, ft_big_elem(box->b));
+		pa(&box->a, &box->b, flag, string);
+	}
 }

@@ -6,39 +6,38 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/27 19:02:03 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/17 15:00:08 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:09:00 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static	char	*print_t_nb(t_nb *a, char *s)
+static	void	print_t_nb(t_nb *a, t_string *string)
 {
 	char		*str;
 	t_nb		*tmp;
 
 	str = ft_itoa(a->nb);
-	s = ft_strjoin_safe(s, str);
-	s = ft_putchar_str(s, ' ');
+	ft_stringadd(string, str, ft_strlen(str));
+	ft_stringaddc(string, ' ');
+	ft_strdel(&str);
 	tmp = a->next;
 	while (tmp && tmp != a)
 	{
 		str = ft_putchar_str(ft_itoa(tmp->nb), ' ');
-		s = ft_strjoin_safe(s, str);
+		ft_stringadd(string, str, ft_strlen(str));
+		ft_strdel(&str);
 		tmp = tmp->next;
 	}
-	return (s);
 }
 
-void			print_option_sw(t_nb *a, t_nb *b, char **str)
+void			print_option_sw(t_nb *a, t_nb *b, t_string *string)
 {
-	char	*s;
-
-	s = ft_strjoin_safe(*str, DP("a : "));
+	ft_stringadd(string, "a : ", 4);
 	if (a)
-		s = print_t_nb(a, s);
-	s = ft_strjoin_safe(s, DP("\nb : "));
+		print_t_nb(a, string);
+	ft_stringadd(string, "\nb : ", 5);
 	if (b)
-		s = print_t_nb(b, s);
-	*str = ft_putchar_str(s, '\n');
+		print_t_nb(b, string);
+	ft_stringaddc(string, '\n');
 }

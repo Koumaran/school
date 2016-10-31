@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/17 17:39:12 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/07/26 20:22:48 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:36:24 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char						*add_apos(char *str, int len);
 void						ft_stringinit(t_string *string);
 void						ft_stringaddc(t_string *string, char c);
 void						ft_stringadd(t_string *string, char *str, int n);
+void						ft_stringaddnl(t_string *string, char *str, int n);
 int							ft_stringext(t_string *string, int need);
-
+void						ft_stringdelete(t_string *string);
 #endif

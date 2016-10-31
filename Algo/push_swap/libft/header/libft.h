@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 15:46:07 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/12 13:18:08 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/29 11:55:41 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char				*ft_strstr(const char *str, const char *to_find);
 char				*ft_strnstr(const char *str, const char *to_find, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-int					ft_atoi(const char *str);
+t_long				ft_atoi(const char *str);
 int					ft_atoin(const char *str, int len);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -97,7 +97,7 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_strsplit_lst(char const *s, char c);
 void				**ft_memalloc_2d(size_t x, size_t y);
-void				ft_memfree_2d(char **map, size_t n);
+void				ft_memfree_2d(char **map);
 char				*ft_strrev(char *str);
 size_t				ft_filelen(char *file);
 char				*ft_file_to_char(char *file);

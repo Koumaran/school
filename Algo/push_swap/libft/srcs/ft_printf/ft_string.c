@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:24:19 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/07/26 16:54:22 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:30:03 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,21 @@ void	ft_stringadd(t_string *string, char *str, int n)
 		return ;
 	ft_memmove(string->content + string->size, str, n);
 	string->size += n;
+}
+
+void	ft_stringaddnl(t_string *string, char *str, int n)
+{
+	if (!ft_stringext(string, n + 1))
+		return ;
+	ft_memmove(string->content + string->size, str, n);
+	string->size += n;
+	string->content[string->size++] = '\n';
+}
+
+void	ft_stringdelete(t_string *string)
+{
+	if (string && string->content)
+		ft_strdel(&string->content);
+	string->size = 0;
+	string->alloc_size = 0;
 }

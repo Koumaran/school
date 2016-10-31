@@ -6,20 +6,35 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/11 16:49:30 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/08/21 14:53:38 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/10/28 17:43:26 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int			ft_max(t_nb *tab)
+int		get_position(t_nb *pile, int nb)
+{
+	t_nb	*tmp;
+	int		pos;
+
+	tmp = pile;
+	pos = 1;
+	while (tmp->nb != nb)
+	{
+		pos++;
+		tmp = tmp->next;
+	}
+	return (pos);
+}
+
+int			ft_big_elem(t_nb *pile)
 {
 	int		x;
 	t_nb	*tmp;
 
-	x = tab->nb;
-	tmp = tab->next;
-	while (tmp != tab)
+	x = pile->nb;
+	tmp = pile->next;
+	while (tmp != pile)
 	{
 		if (x < tmp->nb)
 			x = tmp->nb;
@@ -28,30 +43,14 @@ int			ft_max(t_nb *tab)
 	return (x);
 }
 
-int			ft_min2(t_nb *tab, int min)
+int			ft_small_elem(t_nb *pile)
 {
 	int		x;
 	t_nb	*tmp;
 
-	x = tab->nb;
-	tmp = tab->next;
-	while (tmp != tab)
-	{
-		if (tmp->nb != min && x > tmp->nb)
-			x = tmp->nb;
-		tmp = tmp->next;
-	}
-	return (x);
-}
-
-int			ft_min(t_nb *tab)
-{
-	int		x;
-	t_nb	*tmp;
-
-	x = tab->nb;
-	tmp = tab->next;
-	while (tmp != tab)
+	x = pile->nb;
+	tmp = pile->next;
+	while (tmp != pile)
 	{
 		if (x > tmp->nb)
 			x = tmp->nb;
@@ -65,6 +64,8 @@ int			get_len(t_nb *a, int *midl)
 	int		len;
 	t_nb	*tmp;
 
+	if (a == NULL)
+		return (0);
 	len = 1;
 	tmp = a->next;
 	while (tmp != a)
@@ -74,12 +75,4 @@ int			get_len(t_nb *a, int *midl)
 	}
 	*midl = (len / 2) + (len % 2);
 	return (len);
-}
-
-t_box		*init_box(t_box *box, t_nb *a)
-{
-	box->max = ft_max(a);
-	box->min = ft_min(a);
-	box->len = get_len(a, &box->midl);
-	return (box);
 }
