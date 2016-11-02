@@ -30,41 +30,39 @@ t_flag			*add_flag_sw(char *str, t_flag *flag)
 		tmp->c = 1;
 	if (CHR(str, 'r') != NULL)
 		tmp->r = 1;
-	if (CHR(str, 'h') != NULL)
-		tmp->h = 1;
 	while (*str)
 	{
-		if (CHR("-vcrh", *str) == NULL)
+		if (CHR("-vcr", *str) == NULL)
 			ft_error("\033[31mError");
 		str++;
 	}
 	return (tmp);
 }
 
-t_box			parse_swap(t_flag *flag, char **av, t_box *box, int y)
+t_box			parse_swap(t_flag *flag, char **av, t_box *box)
 {
-	int		nb;
+	t_long		nb;
+	int		i;
 	char	**tab;
 
 	while (*av)
 	{
 		tab = ft_strsplit(*av++, ' ');
-		while (*tab)
+		i = -1;
+		while (tab[++i])
 		{
-			if (!ft_strncmp(*tab, "-v", 2) ||
-					!ft_strncmp(*tab, "-c", 2) || !ft_strncmp(*tab, "-r", 2))
-				flag = add_flag_sw(*tab, flag);
+			if (!ft_strncmp(tab[i], "-v", 2) ||
+					!ft_strncmp(tab[i], "-c", 2) || !ft_strncmp(tab[i], "-r", 2))
+				flag = add_flag_sw(tab[i], flag);
 			else
 			{
-				nb = ft_atoi(*tab);
-				y = ft_strlen(*tab);
-				if (CMP(ft_itoa(nb), *tab) ||
-						(CMP(ft_itoa(nb), *tab) && y >= 10))
+				nb = ft_atoi(tab[i]);
+				if (nb < -2147483648 || nb > 2147483647)
 					ft_error("\033[31mError");
 				ft_list_push_back(&box->a, nb);
 			}
-			free(*tab++);
 		}
+		ft_memfree_2d(tab);
 	}
 	return (*box);
 }

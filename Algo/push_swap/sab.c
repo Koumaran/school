@@ -12,13 +12,12 @@
 
 #include "header.h"
 
-void		sa(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
+void		sa(t_box *box, t_flag *flag, t_string *string)
 {
 	t_nb	*tmp_a;
 	int		x;
 
-	tmp_a = *a;
-	(void)b;
+	tmp_a = box->a;
 	if (tmp_a && tmp_a->next != tmp_a)
 	{
 		ft_stringaddnl(string, "=sa", 3);
@@ -26,17 +25,16 @@ void		sa(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
 		tmp_a->nb = tmp_a->next->nb;
 		tmp_a->next->nb = x;
 		if (flag && flag->v)
-			print_option_sw(*a, *b, string);
+			print_option_sw(box->a, box->b, string);
 	}
 }
 
-void		sb(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
+void		sb(t_box *box, t_flag *flag, t_string *string)
 {
 	t_nb	*tmp_b;
 	int		x;
 
-	(void)a;
-	tmp_b = *b;
+	tmp_b = box->b;
 	if (tmp_b && tmp_b->next != tmp_b)
 	{
 		ft_stringaddnl(string, "=sb", 3);
@@ -44,14 +42,12 @@ void		sb(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
 		tmp_b->nb = tmp_b->next->nb;
 		tmp_b->next->nb = x;
 		if (flag && flag->v)
-			print_option_sw(*a, *b, string);
+			print_option_sw(box->a, box->b, string);
 	}
 }
 
-void		ss(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
+void		ss(t_box *box, t_flag *flag, t_string *string)
 {
-	if (*a && (*a)->next != *a)
-		sa(a, b, flag, string);
-	if (*b && (*b)->next != *b)
-		sb(a, b, flag, string);
+	sa(box, flag, string);
+	sb(box, flag, string);
 }

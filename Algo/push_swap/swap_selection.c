@@ -39,10 +39,10 @@ void		rotate_well_b(t_box *box, t_flag *flag, t_string *string, int nb)
 	pos = get_position(box->b, nb);
 	if (pos >= box->midl)
 		while (box->b->nb != nb)
-			rrb(&box->a, &box->b, flag, string);
+			rrb(box, flag, string);
 	else
 		while (box->b->nb != nb)
-			rb(&box->a, &box->b, flag, string);
+			rb(box, flag, string);
 }
 
 void		swap_select(t_box *box, t_flag *flag, t_string *string)
@@ -59,17 +59,17 @@ void		swap_select(t_box *box, t_flag *flag, t_string *string)
 		{
 			if (box->a->nb <= mid)
 			{
-				pb(&box->a, &box->b, flag, string);
+				pb(box, flag, string);
 				count--;
 			}
 			else
-				ra(&box->a, &box->b, flag, string);
+				ra(box, flag, string);
 		}
 		box->len = get_len(box->a, &box->midl);
 	}
 	while (box->b)
 	{
 		rotate_well_b(box, flag, string, ft_big_elem(box->b));
-		pa(&box->a, &box->b, flag, string);
+		pa(box, flag, string);
 	}
 }

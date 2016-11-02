@@ -12,32 +12,30 @@
 
 #include "header.h"
 
-void	rra(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
+void	rra(t_box *box, t_flag *flag, t_string *string)
 {
-	(void)b;
-	if (a && *a && (*a)->previus != *b)
+	if (box->a && box->a->previus != box->b)
 	{
 		ft_stringaddnl(string, "=rra", 4);
-		*a = (*a)->previus;
+		box->a = box->a->previus;
 		if (flag && flag->v)
-			print_option_sw(*a, *b, string);
+			print_option_sw(box->a, box->b, string);
 	}
 }
 
-void	rrb(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
+void	rrb(t_box *box, t_flag *flag, t_string *string)
 {
-	(void)a;
-	if (b && *b && (*b)->previus != *b)
+	if (box->b && box->b->previus != box->b)
 	{
 		ft_stringaddnl(string, "=rrb", 4);
-		*b = (*b)->previus;
+		box->b = box->b->previus;
 		if (flag && flag->v)
-			print_option_sw(*a, *b, string);
+			print_option_sw(box->a, box->b, string);
 	}
 }
 
-void	rrr(t_nb **a, t_nb **b, t_flag *flag, t_string *string)
+void	rrr(t_box *box, t_flag *flag, t_string *string)
 {
-	rra(a, b, flag, string);
-	rrb(a, b, flag, string);
+	rra(box, flag, string);
+	rrb(box, flag, string);
 }

@@ -43,16 +43,16 @@ void			swap_select_r(t_box *box, t_flag *flag, t_string *string)
 		while (box->a && count)
 			if (box->a->nb >= mid)
 			{
-				pb(&box->a, &box->b, flag, string);
+				pb(box, flag, string);
 				count--;
 			}
 			else
-				ra(&box->a, &box->b, flag, string);
+				ra(box, flag, string);
 		box->len = get_len(box->a, &box->midl);
 	}
 	while (box->b)
 	{
 		rotate_well_b(box, flag, string, ft_small_elem(box->b));
-		pa(&box->a, &box->b, flag, string);
+		pa(box, flag, string);
 	}
 }

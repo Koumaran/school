@@ -22,7 +22,6 @@ typedef struct			s_flag
 	int					v;
 	int					c;
 	int					r;
-	int					h;
 }						t_flag;
 
 typedef struct			s_nb
@@ -31,12 +30,6 @@ typedef struct			s_nb
 	struct s_nb			*next;
 	struct s_nb			*previus;
 }						t_nb;
-
-typedef struct			s_opp
-{
-	char				*name;
-	void				(*get_op)(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-}						t_opp;
 
 typedef struct			s_box
 {
@@ -48,7 +41,13 @@ typedef struct			s_box
 	struct s_nb			*b;
 }						t_box;
 
-t_box					parse_swap(t_flag *flag, char **av, t_box *box, int y);
+typedef struct			s_opp
+{
+	char				*name;
+	void				(*get_op)(t_box *box, t_flag *flag, t_string *string);
+}						t_opp;
+
+t_box					parse_swap(t_flag *flag, char **av, t_box *box);
 t_nb					*ft_create_elem(int nbr);
 void					ft_list_push_back(t_nb **begin, int nbr);
 void					get_extrem_box(t_box *box, t_nb *a);
@@ -79,16 +78,16 @@ char					*print_join(char **tab, int len);
 void					print_v(char **tab, int c);
 void					print_ps(char **tab, int c);
 
-void					sa(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					sb(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					ss(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					ra(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					rb(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					rr(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					rra(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					rrb(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					rrr(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					pa(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
-void					pb(t_nb **a, t_nb **b, t_flag *flag, t_string *string);
+void					sa(t_box *box, t_flag *flag, t_string *string);
+void					sb(t_box *box, t_flag *flag, t_string *string);
+void					ss(t_box *box, t_flag *flag, t_string *string);
+void					ra(t_box *box, t_flag *flag, t_string *string);
+void					rb(t_box *box, t_flag *flag, t_string *string);
+void					rr(t_box *box, t_flag *flag, t_string *string);
+void					rra(t_box *box, t_flag *flag, t_string *string);
+void					rrb(t_box *box, t_flag *flag, t_string *string);
+void					rrr(t_box *box, t_flag *flag, t_string *string);
+void					pa(t_box *box, t_flag *flag, t_string *string);
+void					pb(t_box *box, t_flag *flag, t_string *string);
 
 #endif

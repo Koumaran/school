@@ -15,6 +15,7 @@
 static void		activate_swap(t_box *box, t_flag *flag, t_string *string)
 {
 	char	*tmp;
+	char	**split;
 
 	get_extrem_box(box, box->a);
 	tmp = NULL;
@@ -26,16 +27,18 @@ static void		activate_swap(t_box *box, t_flag *flag, t_string *string)
 			swap_select(box, flag, string);
 	if (flag->v == 0)
 	{
-		tmp = print_join(ft_strsplit(string->content, '\n'), 0);
+		tmp = print_join((split = ft_strsplit(string->content, '\n')), 0);
 		ft_stringdelete(string);
 		string->content = tmp;
 		string->size = ft_strlen(tmp);
+		ft_memfree_2d(split);
 	}
 }
 
 static void		push_swap(t_box *box, t_flag *flag)
 {
 	t_string	string;
+	char		**split;
 
 	if (flag->r == 1 && check_good_r(box->a))
 		exit(1);
@@ -43,11 +46,13 @@ static void		push_swap(t_box *box, t_flag *flag)
 		exit(1);
 	ft_stringinit(&string);
 	activate_swap(box, flag, &string);
+	split = ft_strsplit(string.content, '=');
 	if (flag->v)
-		print_v(ft_strsplit(string.content, '='), flag->c);
+		print_v(split, flag->c);
 	else
-		print_ps(ft_strsplit(string.content, '='), flag->c);
+		print_ps(split, flag->c);
 	ft_stringdelete(&string);
+	ft_memfree_2d(split);
 }
 
 static void		clear_box(t_box *box, t_flag *flag)
@@ -81,10 +86,9 @@ int				main(int argc, char **argv)
 	}
 	ft_bzero(&box, sizeof(t_box));
 	ft_bzero(&flag, sizeof(t_flag));
-	box = parse_swap(&flag, ++argv, &box, 0);
+	box = parse_swap(&flag, ++argv, &box);
 	check_double(box.a);
 	push_swap(&box, &flag);
 	clear_box(&box, &flag);
-	while (1);
 	return (0);
 }

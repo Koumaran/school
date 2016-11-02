@@ -15,17 +15,17 @@
 t_box		*before_tri(t_box *box, t_flag *flag, t_string *string)
 {
 	if (box->a->nb == box->max)
-		ra(&box->a, &box->b, flag, string);
+		ra(box, flag, string);
 	else if (box->a->previus->nb == box->min)
-		rra(&box->a, &box->b, flag, string);
+		rra(box, flag, string);
 	return (box);
 }
 
 t_box		*before_tri_r(t_box *box, t_flag *flag, t_string *string)
 {
 	if (box->a->nb == box->min)
-		ra(&box->a, &box->b, flag, string);
+		ra(box, flag, string);
 	else if (box->a->previus->nb == box->max)
-		rra(&box->a, &box->b, flag, string);
+		rra(box, flag, string);
 	return (box);
 }

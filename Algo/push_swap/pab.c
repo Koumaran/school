@@ -27,7 +27,7 @@ static t_nb		*push_list_to_head(t_nb *tab, t_nb *list)
 	return (list);
 }
 
-void			pa(t_box *box, t_flag *flag, t_string *string, int from)
+void			pa(t_box *box, t_flag *flag, t_string *string)
 {
 	t_nb	*tmp;
 	t_nb	*to_move;
@@ -36,31 +36,29 @@ void			pa(t_box *box, t_flag *flag, t_string *string, int from)
 	{
 		tmp = box->b;
 		to_move = box->b;
-		if (tmp->next != tmp->b)
+		if (tmp->next != box->b)
 		{
 			tmp = tmp->next;
 			tmp->previus = to_move->previus;
-			tmp2->previus->next = tmp;
+			to_move->previus->next = tmp;
 		}
 		else
 			box->b = NULL;
 		box->a = push_list_to_head(box->a, to_move);
-		if (from == 1)
-			ft_stringaddnl(string, "=pa", 3);
+		ft_stringaddnl(string, "=pa", 3);
 		if (flag && flag->v)
 			print_option_sw(box->a, box->b, string);
 	}
 }
 
-void			pb(t_box *box, t_flag *flag, t_string *string, int from)
+void			pb(t_box *box, t_flag *flag, t_string *string)
 {
 	t_nb	*tmp;
 	t_nb	*to_move;
 
 	if (box->a)
 	{
-		if (from == 1)
-			ft_stringaddnl(string, "=pb", 3);
+		ft_stringaddnl(string, "=pb", 3);
 		tmp = box->a;
 		to_move = box->a;
 		if (tmp->next != tmp)

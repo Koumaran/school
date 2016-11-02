@@ -61,6 +61,5 @@ int					main(int argc, char **argv)
 		ft_putstr("\033[32mOK\n\033[0m");
 	else
 		ft_error("\033[31mKO");
-	while (1);
 	return (0);
 }
