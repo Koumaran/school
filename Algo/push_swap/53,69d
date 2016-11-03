@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/22 11:42:07 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/03 21:21:50 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 19:17:07 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,23 @@ static void		push_swap(t_box *box, t_flag *flag)
 	ft_stringdelete(&string);
 }
 
+void		clear_box(t_box *box, t_flag *flag)
+{
+	t_nb	*tmp;
+	t_nb	*tmp2;
+
+	ft_bzero(flag, sizeof(t_flag));
+	tmp = box->a->next;
+	while (tmp != box->a)
+	{
+		tmp2 = tmp;
+		tmp = tmp->next;
+		free(tmp2);
+	}
+	free(tmp);
+	ft_bzero(box, sizeof(t_box));
+}
+
 int				main(int argc, char **argv)
 {
 	t_box	box;
@@ -64,8 +81,10 @@ int				main(int argc, char **argv)
 	}
 	ft_bzero(&box, sizeof(t_box));
 	ft_bzero(&flag, sizeof(t_flag));
-	parse_swap(&flag, ++argv, &box);
+	box = parse_swap(&flag, ++argv, &box);
+	check_double(box.a);
 	push_swap(&box, &flag);
 	clear_box(&box, &flag);
+	while (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/26 19:26:33 by jsivanes          #+#    #+#              #
-#    Updated: 2016/10/28 17:43:53 by jsivanes         ###   ########.fr        #
+#    Updated: 2016/11/03 18:25:10 by jsivanes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,23 +21,26 @@ C_FILES = ft_list.c pab.c parse.c rab.c rrab.c sab.c \
 		  swap_brute_r.c swap_selection.c swap_selection_r.c verification.c\
 		  option_push_swap.c min_max.c print_ps.c\
 
-C_CHECKER = checker.c
-C_PUSH = push_swap.c
-
 OBJ = $(C_FILES:.c=.o)
 
 LIBFT = -Llibft -I$(H_LIBFT) -lft
 
 all: $(NAME) $(NAME2)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(NAME).o
 	@make -C libft
-	@$(CC) -o $(NAME) $(C_PUSH) $^ $(HEAD) $(LIBFT)
+	@$(CC) -o $(NAME) $^ $(HEAD) $(LIBFT)
 
-$(NAME2): $(OBJ)
-	@$(CC) -o $(NAME2) $(C_CHECKER) $^ $(HEAD) $(LIBFT)
+$(NAME2): $(OBJ) $(NAME2).o
+	@$(CC) -o $(NAME2) $^ $(HEAD) $(LIBFT)
 
 %.o: %.c
+	@$(CC) -I$(HEAD) -I$(H_LIBFT) -o $@ -c $<
+
+$(NAME).o: $(NAME).c
+	@$(CC) -I$(HEAD) -I$(H_LIBFT) -o $@ -c $<
+
+$(NAME2).o: $(NAME2).c
 	@$(CC) -I$(HEAD) -I$(H_LIBFT) -o $@ -c $<
 
 .PHONY: clean fclean re

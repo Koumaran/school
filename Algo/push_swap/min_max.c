@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/11 16:49:30 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/28 17:43:26 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 21:29:59 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		get_position(t_nb *pile, int nb)
 	return (pos);
 }
 
-int			ft_big_elem(t_nb *pile)
+int		ft_big_elem(t_nb *pile)
 {
 	int		x;
 	t_nb	*tmp;
@@ -43,7 +43,7 @@ int			ft_big_elem(t_nb *pile)
 	return (x);
 }
 
-int			ft_small_elem(t_nb *pile)
+int		ft_small_elem(t_nb *pile)
 {
 	int		x;
 	t_nb	*tmp;
@@ -59,7 +59,7 @@ int			ft_small_elem(t_nb *pile)
 	return (x);
 }
 
-int			get_len(t_nb *a, int *midl)
+int		get_len(t_nb *a, int *midl)
 {
 	int		len;
 	t_nb	*tmp;

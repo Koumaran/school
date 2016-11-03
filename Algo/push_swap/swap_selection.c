@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 13:43:11 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/28 19:07:22 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 20:33:38 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			get_under_mid(t_box *box, int mid)
 void		rotate_well_b(t_box *box, t_flag *flag, t_string *string, int nb)
 {
 	int		pos;
-	
+
 	box->len = get_len(box->b, &box->midl);
 	pos = get_position(box->b, nb);
 	if (pos >= box->midl)

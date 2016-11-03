@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/17 17:03:49 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/28 19:07:31 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 20:33:10 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static int		get_upper_mid(t_box *box, int mid)
 	t_nb	*tmp;
 	int		count;
 
-	tmp = box->a->next;;
+	tmp = box->a->next;
 	count = 0;
-		if (box->a->nb > mid)
-			count++;
+	if (box->a->nb > mid)
+		count++;
 	while (tmp != box->a)
 	{
 		if (tmp->nb > mid)

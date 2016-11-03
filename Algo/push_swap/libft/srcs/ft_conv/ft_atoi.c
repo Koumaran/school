@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:16:57 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/28 19:41:49 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 21:31:58 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_long		ft_atoi(char const *s)
 {
 	t_long		v;
-	char	negative;
+	char		negative;
 
 	v = 0;
 	negative = 0;

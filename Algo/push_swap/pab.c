@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:06:23 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/29 12:18:06 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 18:57:26 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void			pa(t_box *box, t_flag *flag, t_string *string)
 			tmp = tmp->next;
 			tmp->previus = to_move->previus;
 			to_move->previus->next = tmp;
+			box->b = tmp;
 		}
 		else
 			box->b = NULL;
@@ -66,6 +67,7 @@ void			pb(t_box *box, t_flag *flag, t_string *string)
 			tmp = tmp->next;
 			tmp->previus = to_move->previus;
 			to_move->previus->next = tmp;
+			box->a = tmp;
 		}
 		else
 			box->a = NULL;

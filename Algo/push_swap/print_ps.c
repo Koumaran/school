@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 11:47:12 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/28 18:47:47 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 19:10:42 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char			*print_join(char **tab, int len)
 		else if (x == 0)
 			str = JN(str, tab[i]);
 	}
+	free(tab);
 	return (str);
 }
 
@@ -71,8 +72,8 @@ void			print_ps(char **tab, int c)
 			ft_printf("\033[33m%s\n\033[0m", tab[i]);
 		else
 			ft_printf("%s\n", tab[i]);
-		ft_strdel(&tab[i]);
 	}
+	ft_memfree_2d(tab);
 }
 
 void			print_v(char **tab, int c)
@@ -88,6 +89,6 @@ void			print_v(char **tab, int c)
 			ft_printf("\033[33m%s\033[0m", tab[y]);
 		else
 			ft_putstr(tab[y]);
-		ft_strdel(&(tab[y]));
 	}
+	ft_memfree_2d(tab);
 }

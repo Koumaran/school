@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/14 16:30:32 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/29 12:18:08 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 20:32:03 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static	void	print_checkervector(char **str)
 			ft_putstr(str[i]);
 			ft_putchar('\n');
 		}
-		ft_strdel(&str[i]);
 	}
+	ft_memfree_2d(str);
 }
 
 int				operation(t_box *box, t_flag *flag, t_string *string)
@@ -77,6 +77,7 @@ int				operation(t_box *box, t_flag *flag, t_string *string)
 		ft_strdel(&line);
 		ft_stringdelete(string);
 	}
+	ft_strdel(&line);
 	if (box->b)
 		ft_error("\033[31mKO");
 	if (flag->r == 1)

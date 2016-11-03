@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/13 19:21:36 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/28 19:38:08 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/03 21:32:20 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		get_extrem_box(t_box *box, t_nb *pile)
 	box->len = get_len(pile, &box->midl);
 }
 
-t_flag			*add_flag_sw(char *str, t_flag *flag)
+t_flag		*add_flag_sw(char *str, t_flag *flag)
 {
 	t_flag		*tmp;
 
@@ -30,20 +30,43 @@ t_flag			*add_flag_sw(char *str, t_flag *flag)
 		tmp->c = 1;
 	if (CHR(str, 'r') != NULL)
 		tmp->r = 1;
-	while (*str)
-	{
-		if (CHR("-vcr", *str) == NULL)
-			ft_error("\033[31mError");
-		str++;
-	}
+	if (CHR(str, 'e') != NULL)
+		tmp->e = 1;
 	return (tmp);
 }
 
-t_box			parse_swap(t_flag *flag, char **av, t_box *box)
+int			check_if_num(char *str, t_flag *flag)
+{
+	int		i;
+
+	i = (*str == '-') ? 1 : 0;
+	if (ft_isdigit(str[i]))
+	{
+		while (str[i])
+			if (!ft_isdigit(str[i++]))
+				error_p("Only digit number are allowed", str, flag);
+		return (1);
+	}
+	else if (i == 0 && ft_isalpha(str[i]))
+		error_p("Only digit number are allowed", str, flag);
+	else if (ft_isalpha(str[i]))
+	{
+		while (str[i])
+		{
+			if (!ft_isalpha(str[i]))
+				error_p("Option can't have only alpha", str, flag);
+			if (CHR("vcre", str[i++]) == NULL)
+				error_p("A wrong option detected", str, flag);
+		}
+	}
+	return (0);
+}
+
+void		parse_swap(t_flag *flag, char **av, t_box *box)
 {
 	t_long		nb;
-	int		i;
-	char	**tab;
+	int			i;
+	char		**tab;
 
 	while (*av)
 	{
@@ -51,18 +74,17 @@ t_box			parse_swap(t_flag *flag, char **av, t_box *box)
 		i = -1;
 		while (tab[++i])
 		{
-			if (!ft_strncmp(tab[i], "-v", 2) ||
-					!ft_strncmp(tab[i], "-c", 2) || !ft_strncmp(tab[i], "-r", 2))
+			if (tab[i][0] == '-' && check_if_num(tab[i], flag) == 0)
 				flag = add_flag_sw(tab[i], flag);
-			else
+			else if (check_if_num(tab[i], flag))
 			{
 				nb = ft_atoi(tab[i]);
 				if (nb < -2147483648 || nb > 2147483647)
-					ft_error("\033[31mError");
+					error_p("The number is not an Int", tab[i], flag);
 				ft_list_push_back(&box->a, nb);
 			}
 		}
 		ft_memfree_2d(tab);
 	}
-	return (*box);
+	check_double(box->a, flag);
 }
