@@ -47,7 +47,7 @@ $(NAME2).o: $(NAME2).c
 
 clean:
 	@make clean -C libft
-	@rm -f $(OBJ)
+	@rm -f $(OBJ) $(NAME).o $(NAME2).o
 
 fclean: clean
 	@make fclean -C libft

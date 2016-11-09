@@ -59,7 +59,7 @@ char			*print_join(char **tab, int len)
 	return (str);
 }
 
-void			print_ps(char **tab, int c)
+void			print_ps(char **tab, int c, int w)
 {
 	int		len;
 	int		i;
@@ -73,10 +73,12 @@ void			print_ps(char **tab, int c)
 		else
 			ft_printf("%s\n", tab[i]);
 	}
+	if (w)
+		ft_printf("Total: %d of operation.\n", len);
 	ft_memfree_2d(tab);
 }
 
-void			print_v(char **tab, int c)
+void			print_v(char **tab, int c, int w)
 {
 	int		len;
 	int		y;
@@ -90,5 +92,7 @@ void			print_v(char **tab, int c)
 		else
 			ft_putstr(tab[y]);
 	}
+	if (w)
+		ft_printf("Total: %d of operation.\n", len);
 	ft_memfree_2d(tab);
 }

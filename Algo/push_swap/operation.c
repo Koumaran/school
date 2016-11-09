@@ -68,14 +68,17 @@ int				operation(t_box *box, t_flag *flag, t_string *string)
 		i = 0;
 		while (i < 11 && ft_strcmp(line, opp[i].name) != 0)
 			i++;
-		if (i == 11)
-			ft_error("\033[31mError");
-		ft_stringinit(string);
-		opp[i].get_op(box, flag, string);
-		if (flag->v)
-			print_checkervector(ft_strsplit(string->content, '\n'));
+		if (i == 11 && !flag->a)
+			error_p("Unknown operation", line, flag);
+		if (i < 11)
+		{
+			ft_stringinit(string);
+			opp[i].get_op(box, flag, string);
+			if (flag->v)
+				print_checkervector(ft_strsplit(string->content, '\n'));
+			ft_stringdelete(string);
+		}
 		ft_strdel(&line);
-		ft_stringdelete(string);
 	}
 	ft_strdel(&line);
 	if (box->b)

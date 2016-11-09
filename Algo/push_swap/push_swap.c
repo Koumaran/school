@@ -33,7 +33,7 @@ static void		activate_swap(t_box *box, t_flag *flag, t_string *string)
 	}
 }
 
-static void		push_swap(t_box *box, t_flag *flag)
+void			push_swap(t_box *box, t_flag *flag)
 {
 	t_string	string;
 
@@ -44,9 +44,9 @@ static void		push_swap(t_box *box, t_flag *flag)
 	ft_stringinit(&string);
 	activate_swap(box, flag, &string);
 	if (flag->v)
-		print_v(ft_strsplit(string.content, '='), flag->c);
+		print_v(ft_strsplit(string.content, '='), flag->c, flag->w);
 	else
-		print_ps(ft_strsplit(string.content, '='), flag->c);
+		print_ps(ft_strsplit(string.content, '='), flag->c, flag->w);
 	ft_stringdelete(&string);
 }
 
@@ -59,13 +59,31 @@ int				main(int argc, char **argv)
 	{
 		ft_printf("Push Swap\nUse:\n\t./push_swap [-option] \"ARG\" or ARG\n");
 		ft_printf("Option:\n\t-v: show operation step.\n\t-c: last string");
-		ft_printf("in yellow.\n\t-r: reverse sort.\n");
+		ft_printf("in yellow.\n\t-r: reverse sort.\n\t-e: Show rigth error message\n");
+		ft_printf("\t-p: Lunch checker at end.\n\t-w: show number of operation.\n");
 		return (0);
 	}
 	ft_bzero(&box, sizeof(t_box));
 	ft_bzero(&flag, sizeof(t_flag));
 	parse_swap(&flag, ++argv, &box);
 	push_swap(&box, &flag);
+	if (flag.push_check)
+	{
+		if (flag.r)
+		{
+			if (!box.b && check_good_r(box.a))
+				ft_putstr("\033[33mOK");
+			else
+				ft_error("\033[31mKO");
+		}
+		else
+		{
+			if (!box.b && check_good(box.a))
+				ft_putstr("\033[33mOK");
+			else
+				ft_error("\033[31mKO");
+		}
+	}
 	clear_box(&box, &flag);
 	return (0);
 }

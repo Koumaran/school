@@ -21,8 +21,8 @@ int					main(int argc, char **argv)
 	if (argc < 3)
 	{
 		ft_printf("Checker\nUse:\n\t./checker [option] \"1 2 3\" or 1 2 3\n");
-		ft_printf("Option :\n\t-v: show operation step.\n");
-		ft_printf("\t-r: reverse sort.\n");
+		ft_printf("Option :\n\t-v: show operation step.\n\t-r: reverse sort.\n");
+		ft_printf("\t-e: Show rigth error message.\n\t-a: Allow wrong operation\n");
 		return (0);
 	}
 	ft_bzero(&box, sizeof(t_box));
@@ -31,8 +31,12 @@ int					main(int argc, char **argv)
 	if (operation(&box, &flag, &string))
 	{
 		clear_box(&box, &flag);
-		ft_stringdelete(&string);
 		ft_putstr("\033[32mOK\n\033[0m");
+	}
+	else if (flag.push_check == 1)
+	{
+		push_swap(&box, &flag);
+		clear_box(&box, &flag);
 	}
 	else
 		ft_error("\033[31mKO");

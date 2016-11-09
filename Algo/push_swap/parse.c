@@ -32,6 +32,12 @@ t_flag		*add_flag_sw(char *str, t_flag *flag)
 		tmp->r = 1;
 	if (CHR(str, 'e') != NULL)
 		tmp->e = 1;
+	if (CHR(str, 'a') != NULL)
+		tmp->a = 1;
+	if (CHR(str, 'p') != NULL)
+		tmp->push_check = 1;
+	if (CHR(str, 'w') != NULL)
+		tmp->w = 1;
 	return (tmp);
 }
 
@@ -55,7 +61,7 @@ int			check_if_num(char *str, t_flag *flag)
 		{
 			if (!ft_isalpha(str[i]))
 				error_p("Option can't have only alpha", str, flag);
-			if (CHR("vcre", str[i++]) == NULL)
+			if (CHR("vcreapw", str[i++]) == NULL)
 				error_p("A wrong option detected", str, flag);
 		}
 	}

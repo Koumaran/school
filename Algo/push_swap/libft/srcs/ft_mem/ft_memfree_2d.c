@@ -16,9 +16,9 @@ void	ft_memfree_2d(char **map)
 {
 	int		i;
 
-	i = -1;
-	while (map[++i])
-		free(map[i]);
+	i = 0;
+	while (map[i])
+		free(map[i++]);
 	free(map);
 	map = NULL;
 }

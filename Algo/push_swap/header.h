@@ -14,7 +14,7 @@
 # define HEADER_H
 # include "libft.h"
 # include "ft_printf.h"
-
+# include <stdio.h>
 # define CMP(e, f)		(ft_strcmp(e, f))
 
 typedef struct			s_flag
@@ -23,6 +23,9 @@ typedef struct			s_flag
 	int					c;
 	int					r;
 	int					e;
+	int					a;
+	int					w;
+	int					push_check;
 }						t_flag;
 
 typedef struct			s_nb
@@ -50,6 +53,7 @@ typedef struct			s_opp
 
 void					parse_swap(t_flag *flag, char **av, t_box *box);
 t_nb					*ft_create_elem(int nbr);
+void					push_swap(t_box *box, t_flag *flag);
 void					ft_list_push_back(t_nb **begin, int nbr);
 void					get_extrem_box(t_box *box, t_nb *a);
 int						check_good(t_nb *a);
@@ -82,8 +86,8 @@ int						get_positionnb(t_nb *a, int nb);
 int						get_len(t_nb *a, int *midl);
 
 char					*print_join(char **tab, int len);
-void					print_v(char **tab, int c);
-void					print_ps(char **tab, int c);
+void					print_v(char **tab, int c, int w);
+void					print_ps(char **tab, int c, int w);
 
 void					clear_box(t_box *box, t_flag *flag);
 void					error_p(char *error_message, char *arg, t_flag *flag);

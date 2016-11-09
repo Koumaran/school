@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static int			nl_found(t_list *file, char *str, char **line)
 {
@@ -46,21 +47,38 @@ static t_list		*ft_lstfind_size(t_list **lst, size_t size)
 	return (*lst);
 }
 
-static int			get_line(const int fd, char **line, t_list *file, char *str)
+static void			clear_lst(t_list **lst, t_list **to_del)
 {
-	char			*buf;
+	t_list 			*tmp;
+
+	tmp = *lst;
+	if ((*to_del)->next)
+	{
+		while (tmp->next && tmp->next->content_size != (*to_del)->content_size)
+			tmp = tmp->next;
+		tmp->next = (*to_del)->next;
+	}
+	free((*to_del)->content);
+	free(*to_del);
+	*to_del = NULL;
+}
+
+static int			get_line(t_list *file, char **line, t_list *afile, char *str)
+{
+	char			buf[BUFF_SIZE + 1];
+	char			*tmp;
 	int				ret;
 
-	buf = ft_strnew(BUFF_SIZE);
-	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+	ft_bzero(buf, BUFF_SIZE + 1);
+	while ((ret = read(afile->content_size, buf, BUFF_SIZE)) > 0)
 	{
-		buf[ret] = '\0';
-		str = ft_strjoin_safe(str, buf);
+		tmp = ft_strjoin(str, buf);
+		free(str);
+		str = tmp;
 		if (ft_strchr(str, '\n') != NULL)
-			return (nl_found(file, str, line));
-		buf = ft_strnew(BUFF_SIZE);
+			return (nl_found(afile, str, line));
+		ft_bzero(buf, BUFF_SIZE + 1);
 	}
-	ft_strdel(&buf);
 	if (ret == -1)
 		return (-1);
 	if (str && *str)
@@ -69,6 +87,8 @@ static int			get_line(const int fd, char **line, t_list *file, char *str)
 		ft_strdel(&str);
 		return (1);
 	}
+	ft_strdel(&str);
+	clear_lst(&file, &afile);
 	return (0);
 }
 
@@ -81,9 +101,14 @@ int					get_next_line(const int fd, char **line)
 	if (line == NULL || fd < 0)
 		return (-1);
 	tmp = ft_lstfind_size(&file, (size_t)fd);
-	str = ft_strdup((char *)tmp->content);
-	ft_strdel((char**)&tmp->content);
+	if (tmp->content)
+	{
+		str = ft_strdup((char *)tmp->content);
+		ft_strdel((char**)&tmp->content);
+	}
+	else
+		str = ft_strnew(BUFF_SIZE);
 	if ((ft_strchr(str, '\n') != NULL) && str && str[0])
 		return (nl_found(tmp, str, line));
-	return (get_line(fd, line, tmp, str));
+	return (get_line(file, line, tmp, str));
 }
