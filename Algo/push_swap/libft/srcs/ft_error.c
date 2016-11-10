@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/26 19:35:21 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/03 20:45:34 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/09 15:16:11 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_error(char *str)
 {
-	ft_putstr(str);
-	ft_putchar('\n');
+	ft_putendl_fd(str, 2);
 	exit(1);
 }

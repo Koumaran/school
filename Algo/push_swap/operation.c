@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/14 16:30:32 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/03 20:32:03 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/09 15:56:29 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static	void	print_checkervector(char **str)
 	ft_memfree_2d(str);
 }
 
-int				operation(t_box *box, t_flag *flag, t_string *string)
+static void		read_checker(t_box *box, t_string *string, t_flag *flag)
 {
 	t_opp		opp[11];
 	char		*line;
@@ -80,8 +80,12 @@ int				operation(t_box *box, t_flag *flag, t_string *string)
 		}
 		ft_strdel(&line);
 	}
-	ft_strdel(&line);
-	if (box->b)
+}
+
+int				operation(t_box *box, t_flag *flag, t_string *string)
+{
+	read_checker(box, string, flag);
+	if (box->b && !flag->push_check)
 		ft_error("\033[31mKO");
 	if (flag->r == 1)
 		return (check_good_r(box->a));

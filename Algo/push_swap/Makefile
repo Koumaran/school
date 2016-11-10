@@ -6,7 +6,7 @@
 #    By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/26 19:26:33 by jsivanes          #+#    #+#              #
-#    Updated: 2016/11/03 18:25:10 by jsivanes         ###   ########.fr        #
+#    Updated: 2016/11/09 15:17:44 by jsivanes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ H_LIBFT = libft/header/
 C_FILES = ft_list.c pab.c parse.c rab.c rrab.c sab.c \
 		  operation.c swap_brute.c swap_brute_2.c\
 		  swap_brute_r.c swap_selection.c swap_selection_r.c verification.c\
-		  option_push_swap.c min_max.c print_ps.c\
+		  option_push_swap.c min_max.c print_ps.c lunch_push.c
 
 OBJ = $(C_FILES:.c=.o)
 

@@ -6,14 +6,13 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 18:41:56 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/29 11:49:49 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/09 16:06:57 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static int			nl_found(t_list *file, char *str, char **line)
+static int		nl_found(t_list *file, char *str, char **line)
 {
 	char		*tmp;
 
@@ -24,7 +23,7 @@ static int			nl_found(t_list *file, char *str, char **line)
 	return (1);
 }
 
-static t_list		*ft_lstfind_size(t_list **lst, size_t size)
+static t_list	*ft_lstfind_size(t_list **lst, size_t size)
 {
 	t_list		*tmp;
 
@@ -47,9 +46,9 @@ static t_list		*ft_lstfind_size(t_list **lst, size_t size)
 	return (*lst);
 }
 
-static void			clear_lst(t_list **lst, t_list **to_del)
+static void		clear_lst(t_list **lst, t_list **to_del)
 {
-	t_list 			*tmp;
+	t_list		*tmp;
 
 	tmp = *lst;
 	if ((*to_del)->next)
@@ -63,7 +62,7 @@ static void			clear_lst(t_list **lst, t_list **to_del)
 	*to_del = NULL;
 }
 
-static int			get_line(t_list *file, char **line, t_list *afile, char *str)
+static int		get_line(t_list *file, char **line, t_list *afile, char *str)
 {
 	char			buf[BUFF_SIZE + 1];
 	char			*tmp;
@@ -92,7 +91,7 @@ static int			get_line(t_list *file, char **line, t_list *afile, char *str)
 	return (0);
 }
 
-int					get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
 	static t_list	*file;
 	char			*str;

@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 11:47:12 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/03 19:10:42 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/09 16:10:38 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			print_ps(char **tab, int c, int w)
 			ft_printf("%s\n", tab[i]);
 	}
 	if (w)
-		ft_printf("Total: %d of operation.\n", len);
+		ft_printf("Total: %d operation(s).\n", len);
 	ft_memfree_2d(tab);
 }
 
@@ -93,6 +93,6 @@ void			print_v(char **tab, int c, int w)
 			ft_putstr(tab[y]);
 	}
 	if (w)
-		ft_printf("Total: %d of operation.\n", len);
+		ft_printf("Total: %d operation(s).\n", len);
 	ft_memfree_2d(tab);
 }

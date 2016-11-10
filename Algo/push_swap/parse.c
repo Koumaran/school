@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/13 19:21:36 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/03 21:32:20 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/09 16:09:45 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			check_if_num(char *str, t_flag *flag)
 	return (0);
 }
 
-void		parse_swap(t_flag *flag, char **av, t_box *box)
+int			parse_swap(t_flag *flag, char **av, t_box *box, int len)
 {
 	t_long		nb;
 	int			i;
@@ -88,9 +88,11 @@ void		parse_swap(t_flag *flag, char **av, t_box *box)
 				if (nb < -2147483648 || nb > 2147483647)
 					error_p("The number is not an Int", tab[i], flag);
 				ft_list_push_back(&box->a, nb);
+				len++;
 			}
 		}
 		ft_memfree_2d(tab);
 	}
 	check_double(box->a, flag);
+	return (len);
 }

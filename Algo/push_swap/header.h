@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/13 18:58:21 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/03 21:31:59 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/09 16:11:49 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define HEADER_H
 # include "libft.h"
 # include "ft_printf.h"
-# include <stdio.h>
+
 # define CMP(e, f)		(ft_strcmp(e, f))
 
 typedef struct			s_flag
@@ -51,7 +51,8 @@ typedef struct			s_opp
 	void				(*get_op)(t_box *box, t_flag *flag, t_string *string);
 }						t_opp;
 
-void					parse_swap(t_flag *flag, char **av, t_box *box);
+int						parse_swap(t_flag *flag, char **av, t_box *box,
+						int len);
 t_nb					*ft_create_elem(int nbr);
 void					push_swap(t_box *box, t_flag *flag);
 void					ft_list_push_back(t_nb **begin, int nbr);
