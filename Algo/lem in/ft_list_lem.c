@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 13:34:26 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/13 20:48:57 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/16 15:21:56 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,100 +26,84 @@ t_room		*new_room(char	**str)
 	return (room);
 }
 
-int		ft_pushfront_room(t_lem *lem, char **split)
+t_room		*ft_pushfront_room(t_lem *lem, char **split)
 {
 	t_room		*tmp;
 	t_room		*tmp2;
 
+	tmp2 = new_room(split);
 	if (lem->room)
 	{
-		tmp2 = new_room(split);
 		tmp = lem->room;
 		while (tmp)
 		{
 			if (tmp->name && ft_strcmp(tmp->name, tmp2->name) == 0)
-				return (0);
+				return (NULL);
 			tmp = tmp->next;
 		}
 		tmp2->next = lem->room;
-		lem->room = tmp2;
 	}
-	else
-		lem->room = new_room(split);
-	return (1);
+	lem->room = tmp2;
+	return (tmp2);
 }
 
-int		add_room(t_lem *lem, char **split, int start)
+t_room		*add_room(t_lem *lem, char **split, int start)
 {
 	t_room		*tmp;
-	t_room		*end;
+	t_room		*new;
 
 	if (start == 1)
 		return (ft_pushfront_room(lem, split));
-	end = NULL;
+	new = new_room(split);
 	if (lem->room)
 	{
 		tmp = lem->room;
-		if (tmp->name && ft_strcmp(tmp->name, *split) == 0)
-			return (0);
-		while (tmp->next != NULL)
+		if (tmp->name && ft_strcmp(tmp->name, new->name) == 0)
+			return (NULL);
+		while (tmp->next)
 		{
 			tmp = tmp->next;
-			if (tmp->name && ft_strcmp(tmp->name, *split) == 0)
-				return (0);
-			if (lem->end && ft_strcmp(tmp->next->name, lem->end) == 0)
-			{
-				end = tmp->next;
-				tmp->next = NULL;
-			}
+			if (tmp->name && ft_strcmp(tmp->name, new->name) == 0)
+				return (NULL);
 		}
-		tmp->next = new_room(split);
-		if (end)
-			tmp->next->next = end;
+		tmp->next = new;
 	}
 	else
-		lem->room = new_room(split);
-	return (1);
+		lem->room = new;
+	return (new);
 }
 
-t_join		*new_join(char *from, char *to)
+t_join		*new_join(t_room *r1, t_room *r2)
 {
 	t_join		*join;
 
 	if (!(join = (t_join *)malloc(sizeof(t_join))))
 		return (NULL);
-	join->from = ft_strdup(from);
-	join->to = ft_strdup(to);
+	join->r1 = r1;
+	join->r2 = r2;
 	join->next = NULL;
 	return (join);
 }
 
-int		create_connection(t_lem *lem, char *from, char *to)
+int		create_connection(t_lem *lem, t_room *r1, t_room *r2)
 {
 	t_join		*tmp;
-
+	dprintf(1, "CR\n");
+	dprintf(1, " r1=%s r2=%s\n", r1->name, r2->name);
 	if (lem->join)
 	{
 		tmp = lem->join;
-		if ((tmp->from && ft_strcmp(tmp->from, from) == 0) &&
-				(tmp->to && ft_strcmp(tmp->to, to) == 0))
-			return (0);
-		if ((tmp->from && ft_strcmp(tmp->from, to) == 0) &&
-				(tmp->to && ft_strcmp(tmp->to, from) == 0))
-			return (0);
-		while (tmp->next != NULL)
+		while (tmp)
 		{
+			dprintf(1, "debut\n");
+			if ((!ft_strcmp(tmp->r1->name, r1->name) && !ft_strcmp(tmp->r2->name, r2->name)) || (!ft_strcmp(tmp->r2->name, r1->name) && !ft_strcmp(tmp->r1->name, r2->name)))
+				return (0);
+			dprintf(1, "fin\n");
 			tmp = tmp->next;
-			if ((tmp->from && ft_strcmp(tmp->from, from) == 0) &&
-					(tmp->to && ft_strcmp(tmp->to, to) == 0))
-				return (0);
-			if ((tmp->from && ft_strcmp(tmp->from, to) == 0) &&
-					(tmp->to && ft_strcmp(tmp->to, from) == 0))
-				return (0);
 		}
-		tmp->next = new_join(from, to);
+		tmp = new_join(r1, r2);
 	}
 	else
-		lem->join = new_join(from, to);
+		lem->join = new_join(r1, r2);
 	return (1);
 }

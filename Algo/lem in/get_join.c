@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 19:31:37 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/10/13 21:05:25 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/16 15:21:59 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	check_join(t_lem *lem, t_room *room)
 
 int		get_join(t_lem *lem)
 {
-	t_room		*room;
+	t_join		*join;
 	int			len;
 
-	room = lem->room;
-	while (room)
+	join = lem->join;;
+	while (join)
 	{
 		room->connect = join_to_room(lem, room->name, &room->len);
 		if (ft_strcmp(room->name, lem->start) == 0 && room->len == 0)
