@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-static int		check_number(char *str)
+int		check_number(char *str)
 {
 	int		i;
 
@@ -30,12 +30,10 @@ t_room		*check_room_name(t_lem *lem, char *str)
 	tmp = lem->room;
 	while (tmp)
 	{
-		dprintf(1, "name rpoom=%s\n", tmp->name);
 		if (ft_strcmp(tmp->name, str) == 0)
 			return (tmp);
 		tmp = tmp->next;
 	}
-	dprintf(1, "not found, %s\n", str);
 	return (NULL);
 }
 

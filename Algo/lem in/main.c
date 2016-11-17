@@ -47,7 +47,7 @@ int		check_param(t_lem *lem, t_string *string)
 	
 	line = NULL;
 	ret = 1;
-	if (get_next_line(0, &line) <= 0 || !(lem->nb_ant = ft_getnbr(line)))
+	if (get_next_line(0, &line) <= 0 || !check_number(line) || !(lem->nb_ant = ft_getnbr(line)))
 		return (0);
 	ft_stringaddnl(string, line, 1);
 	ft_strdel(&line);

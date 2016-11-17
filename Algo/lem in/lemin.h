@@ -59,5 +59,6 @@ int				get_sharp(t_lem *lem, t_string *string, char *line);
 t_room			*check_room(t_lem *lem, char *line, int lvl);
 t_room			*check_room_name(t_lem *lem, char *str);
 int				get_join(t_lem *lem);
+int			check_number(char *str);
 
 #endif

@@ -58,12 +58,12 @@ t_room		*add_room(t_lem *lem, char **split, int start)
 	if (lem->room)
 	{
 		tmp = lem->room;
-		if (tmp->name && ft_strcmp(tmp->name, new->name) == 0)
+		if (tmp->name && ft_strcmp(tmp->name, new->name) == 0 || (tmp->x == new->x && tmp->y == new->y))
 			return (NULL);
 		while (tmp->next)
 		{
 			tmp = tmp->next;
-			if (tmp->name && ft_strcmp(tmp->name, new->name) == 0)
+			if (tmp->name && ft_strcmp(tmp->name, new->name) == 0 || (tmp->x == new->x && tmp->y == new->y))
 				return (NULL);
 		}
 		tmp->next = new;
@@ -88,17 +88,14 @@ t_join		*new_join(t_room *r1, t_room *r2)
 int		create_connection(t_lem *lem, t_room *r1, t_room *r2)
 {
 	t_join		*tmp;
-	dprintf(1, "CR\n");
-	dprintf(1, " r1=%s r2=%s\n", r1->name, r2->name);
+	
 	if (lem->join)
 	{
 		tmp = lem->join;
 		while (tmp)
 		{
-			dprintf(1, "debut\n");
-			if ((!ft_strcmp(tmp->r1->name, r1->name) && !ft_strcmp(tmp->r2->name, r2->name)) || (!ft_strcmp(tmp->r2->name, r1->name) && !ft_strcmp(tmp->r1->name, r2->name)))
+			if ((tmp->r1 == r1 && tmp->r2 == r2) || (tmp->r1 == r2 && tmp->r2 == r1))
 				return (0);
-			dprintf(1, "fin\n");
 			tmp = tmp->next;
 		}
 		tmp = new_join(r1, r2);
