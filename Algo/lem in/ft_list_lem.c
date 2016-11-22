@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 13:34:26 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/16 15:21:56 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/17 15:15:22 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ t_room		*add_room(t_lem *lem, char **split, int start)
 	if (lem->room)
 	{
 		tmp = lem->room;
-		if (tmp->name && ft_strcmp(tmp->name, new->name) == 0 || (tmp->x == new->x && tmp->y == new->y))
+		if ((tmp->name && ft_strcmp(tmp->name, new->name) == 0) ||
+				(tmp->x == new->x && tmp->y == new->y))
 			return (NULL);
 		while (tmp->next)
 		{
 			tmp = tmp->next;
-			if (tmp->name && ft_strcmp(tmp->name, new->name) == 0 || (tmp->x == new->x && tmp->y == new->y))
+			if ((tmp->name && ft_strcmp(tmp->name, new->name) == 0) ||
+					(tmp->x == new->x && tmp->y == new->y))
 				return (NULL);
 		}
 		tmp->next = new;
@@ -92,13 +94,15 @@ int		create_connection(t_lem *lem, t_room *r1, t_room *r2)
 	if (lem->join)
 	{
 		tmp = lem->join;
-		while (tmp)
+		if ((tmp->r1 == r1 && tmp->r2 == r2) || (tmp->r1 == r2 && tmp->r2 == r1))
+			return (0);
+		while (tmp->next)
 		{
+			tmp = tmp->next;
 			if ((tmp->r1 == r1 && tmp->r2 == r2) || (tmp->r1 == r2 && tmp->r2 == r1))
 				return (0);
-			tmp = tmp->next;
 		}
-		tmp = new_join(r1, r2);
+		tmp->next = new_join(r1, r2);
 	}
 	else
 		lem->join = new_join(r1, r2);

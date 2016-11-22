@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:06:35 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/16 15:21:57 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/22 13:58:11 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		get_sharp(t_lem *lem, t_string *string, char *line)
 		if (!(room = check_room(lem, line, 1)))
 			return (0);
 		lem->start = room;
+		lem->start->ant = lem->nb_ant;
 	}
 	else if (ft_strcmp(line, "##end") == 0)
 	{
