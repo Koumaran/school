@@ -6,38 +6,84 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:06:35 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/22 13:58:11 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/23 13:54:14 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int		check_number(char *str)
+t_room		*new_room(char	**split, t_room *src_room)
 {
-	int		i;
+	t_room		*room;
 
-	i = -1;
-	while (str[++i])
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-	return (1);
+	if (!(room = (t_room*)malloc(sizeof(t_room))))
+		return (NULL);
+	ft_bzero(room, sizeof(t_room));
+	if (split && *split)
+	{
+		room->name = ft_strdup(*split);
+		room->x = ft_atoi(split[1]);
+		room->y = ft_atoi(split[2]);
+	}
+	if (src_room)
+	{
+		room->name = ft_strdup(src_room->name);
+		room->x = src_room->x;
+		room->y = src_room->y;
+		room->nb_join = src_room->nb_join;
+	}
+	room->next = NULL;
+	return (room);
 }
 
-t_room		*check_room_name(t_lem *lem, char *str)
+t_room		*ft_pushfront_room(t_room **room, char **split, t_room *src_room)
 {
 	t_room		*tmp;
+	t_room		*tmp2;
 
-	tmp = lem->room;
-	while (tmp)
+	tmp2 = new_room(split, src_room);
+	if (*room)
 	{
-		if (ft_strcmp(tmp->name, str) == 0)
-			return (tmp);
-		tmp = tmp->next;
+		tmp = *room;
+		while (tmp)
+		{
+			if (tmp->name && ft_strcmp(tmp->name, tmp2->name) == 0)
+				return (NULL);
+			tmp = tmp->next;
+		}
+		tmp2->next = *room;
 	}
-	return (NULL);
+	*room = tmp2;
+	return (tmp2);
 }
 
-t_room		*check_room(t_lem *lem, char *line, int lvl)
+t_room		*ft_pushback_room(t_room **room, char **split, t_room *src_room)
+{
+	t_room		*tmp;
+	t_room		*new;
+	
+	new = new_room(split, src_room);
+	if (*room)
+	{
+		tmp = *room;
+		if ((tmp->name && ft_strcmp(tmp->name, new->name) == 0) ||
+				(tmp->x == new->x && tmp->y == new->y))
+			return (NULL);
+		while (tmp->next)
+		{
+			tmp = tmp->next;
+			if ((tmp->name && ft_strcmp(tmp->name, new->name) == 0) ||
+					(tmp->x == new->x && tmp->y == new->y))
+				return (NULL);
+		}
+		tmp->next = new;
+	}
+	else
+		*room = new;
+	return (new);
+}
+
+t_room		*check_room(t_lem *lem, char *line, int start)
 {
 	char	**split;
 	t_room	*room;
@@ -46,33 +92,13 @@ t_room		*check_room(t_lem *lem, char *line, int lvl)
 		return (NULL);
 	split = ft_strsplit(line, ' ');
 	if (split[0][0] == 'L' || !check_number(split[1])
-		|| !check_number(split[2]) || !(room = add_room(lem, split, lvl)))
+		|| !check_number(split[2]))
 		return (NULL);
+	if (start == 1)
+		room = ft_pushfront_room(&lem->room, split, NULL);
+	else
+		room = ft_pushback_room(&lem->room, split, NULL);
 	ft_memfree_2d(split);
-	lem->nb_room += 1;
+	lem->nb_room += (room) ? 1 : 0;
 	return (room);
-}
-
-int		get_sharp(t_lem *lem, t_string *string, char *line)
-{
-	t_room		*room;
-
-	if (ft_strcmp(line, "##start") == 0)
-	{
-		get_next_line(0, &line);
-		ft_stringaddnl(string, line, ft_strlen(line));
-		if (!(room = check_room(lem, line, 1)))
-			return (0);
-		lem->start = room;
-		lem->start->ant = lem->nb_ant;
-	}
-	else if (ft_strcmp(line, "##end") == 0)
-	{
-		get_next_line(0, &line);
-		ft_stringaddnl(string, line, ft_strlen(line));
-		if (!(room = check_room(lem, line, 0)))
-			return (0);
-		lem->end = room;;
-	}
-	return (1);
 }

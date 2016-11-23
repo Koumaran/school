@@ -6,31 +6,11 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 13:34:49 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/22 12:32:37 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/23 13:42:37 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
-int		check_connect(t_lem *lem, char *line)
-{
-	char		**split;
-	t_room		*r1;
-	t_room		*r2;
-
-	if (lem->nb_room < 2 || !(split = ft_strsplit(line, '-')))
-		return (0);
-	if (ft_strcmp(split[0], split[1]) == 0)
-		return (0);
-	if (!(r1 = check_room_name(lem, split[0])) ||
-			!(r2 = check_room_name(lem, split[1])))
-		return (0);
-	if (!create_connection(lem, r1, r2))
-		return (0);
-	lem->nb_join += 1;
-	ft_memfree_2d(split);
-	return (1);
-}
 
 int		last_check(t_lem *lem)
 {
@@ -79,9 +59,9 @@ int		check_param(t_lem *lem, t_string *string)
 			ret = get_sharp(lem, string, line);
 		else if (!check_room(lem, line, 0))
 			ret = 0;
+		ft_strdel(&line);
 		if (ret == 0)
 			return (0);
-		ft_strdel(&line);
 	}
 	return (last_check(lem));
 }

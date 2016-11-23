@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 12:33:19 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/22 14:56:16 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/11/22 16:28:44 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list		*smaller_way(t_list *way, int len)
 	}
 	return (ret);
 }
-
+/*
 void			add_antinroom(t_room *room, int ant, int nb)
 {
 	t_room		*tmp;
@@ -85,14 +85,24 @@ void		ft_print_smallem(t_lem *lem, t_list *way, int ant)
 		ft_putchar('\n');
 	}
 }
-
+*/
 int			get_solution(t_lem *lem, t_list *way)
 {
 	t_list		*tmp;
+	t_room		*room;
 
 	if (!way)
 		return (0);
+	dprintf(1, "debut\n");
 	tmp = smaller_way(way, 0);
+	room = (t_room*)tmp->content;
+	while (room)
+	{
+		dprintf(1, "name=%s\n", room->name);
+		room = room->next;
+	}
+	lem->nb_ant = 4;
+	/*
 	ft_print_smallem(lem, tmp, lem->nb_ant);
 	while (way)
 	{
@@ -100,6 +110,6 @@ int			get_solution(t_lem *lem, t_list *way)
 		way = way->next;
 		clear_room((t_room**)&tmp->content);
 		free(tmp);
-	}
+	}*/
 	return (1);
 }
