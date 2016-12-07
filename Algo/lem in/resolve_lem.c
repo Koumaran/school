@@ -39,7 +39,7 @@ t_join		*get_join(t_lem *lem, t_room *room, t_join *to_pass)
 int			check_if_exist(t_room **room, t_room *get, t_room *start)
 {
 	t_room		*tmp;
-	int		i;
+	int			i;
 
 	tmp = *room;
 	if (ft_strcmp(get->name, start->name) == 0)
@@ -56,7 +56,7 @@ int			check_if_exist(t_room **room, t_room *get, t_room *start)
 	return (1);
 }
 
-int		check_if_end(t_room *room, t_room *end)
+int			check_if_end(t_room *room, t_room *end)
 {
 	t_room *tmp;
 
@@ -70,7 +70,7 @@ int		check_if_end(t_room *room, t_room *end)
 	return (0);
 }
 
-int		get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
+int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 {
 	t_join		*join;
 	t_room		*tmp_room;
@@ -91,6 +91,7 @@ int		get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 					clear_this_room(room, tmp_room->name);
 					(*room)->len--;
 				}
+			dprintf(1, "child 2 paased\n");
 		}
 		else
 		{
@@ -103,7 +104,7 @@ int		get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 	return (0);
 }
 
-int			resolve_lem(t_lem *lem, int nb_join)
+int			resolve_lem(t_lem *lem, t_join *start_join)
 {
 	t_list		*way;
 	t_join		*join_lst;
@@ -111,15 +112,13 @@ int			resolve_lem(t_lem *lem, int nb_join)
 	t_room		*room;
 	t_room		*tmp_room;
 	t_list		*tmp;
-	t_join		*tmp_j;
 
 	way = NULL;
-	while (nb_join--)
+	join = start_join;
+	while (join)
 	{
 		room = NULL;
 		join_lst = NULL;
-		if (!(join = get_join(lem, lem->start, join_lst)))
-			return (0);
 		ft_pushback_join(&join_lst, new_join(join->r1, join->r2));
 		tmp_room = (join->r1 == lem->start) ? join->r2 : join->r1;
 		ft_pushback_room(&room, NULL, tmp_room);
@@ -133,6 +132,7 @@ int			resolve_lem(t_lem *lem, int nb_join)
 			}
 		if (room)
 			ft_lstadd_back(&way, ft_lstnew((void*)room, sizeof(t_room)));
+		join = join->next;
 	}
 	while (join_lst)
 	{
