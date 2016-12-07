@@ -84,14 +84,12 @@ int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 		dprintf(1, "src=%s =>child name=%s join r1=%s r2=%s\n", src_room->name, tmp_room->name, join->r1->name, join->r2->name);
 		if (check_if_exist(room, tmp_room, lem->start))
 		{
-			dprintf(1, "child 2 name=%s\n", tmp_room->name);
 			if (tmp_room != lem->end)
 				if (get_child(lem, room, tmp_room, join_lst) == 0)
 				{
 					clear_this_room(room, tmp_room->name);
 					(*room)->len--;
 				}
-			dprintf(1, "child 2 paased\n");
 		}
 		else
 		{
@@ -99,12 +97,12 @@ int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 			(*room)->len--;
 		}
 		if (check_if_end(*room, lem->end))
-			return (1);
+			return ((*room)->len);
 	}
 	return (0);
 }
 
-int			resolve_lem(t_lem *lem, t_join *start_join)
+t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 {
 	t_list		*way;
 	t_join		*join_lst;
@@ -126,19 +124,13 @@ int			resolve_lem(t_lem *lem, t_join *start_join)
 		room->len = 1;
 		if (tmp_room != lem->end)
 			if (tmp_room->nb_join < 2 || get_child(lem, &room, tmp_room, &join_lst) == 0)
-			{
-				dprintf(1, "a effacer\n");
 				clear_room(&room);
-			}
 		if (room)
 			ft_lstadd_back(&way, ft_lstnew((void*)room, sizeof(t_room)));
 		join = join->next;
+		clear_join(&join_lst);
 	}
-	while (join_lst)
-	{
-		dprintf(1, "join r1=%s, r2 =%s\n", join_lst->r1->name, join_lst->r2->name);
-		join_lst = join_lst->next;
-	}
+	check_way(&way);
 	tmp = way;
 	while (tmp)
 	{
@@ -151,8 +143,5 @@ int			resolve_lem(t_lem *lem, t_join *start_join)
 		}
 		tmp = tmp->next;
 	}
-	if (!way)
-		return (0);
-	return (1);
-	//return (get_solution(lem, way));
+	return (way);
 }

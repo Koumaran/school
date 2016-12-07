@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:06:37 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/07 15:51:50 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/07 20:55:54 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_room			*ft_pushback_room(t_room **room, char **split, t_room *cpy);
 t_room			*ft_pushfront_room(t_room **room, char **split, t_room *cpy);
 t_join			*new_join(t_room *r1, t_room *r2);
 void			ft_pushback_join(t_join **join, t_join *new_join);
-int				resolve_lem(t_lem *lem, t_join *start_join);
+t_list			*resolve_lem(t_lem *lem, t_join *start_join);
+void			check_way(t_list **way);
 int				get_solution(t_lem *lem, t_list *way);
 void			clear_room(t_room **way_room);
 void			clear_this_room(t_room **room, char *name);

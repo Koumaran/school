@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 13:34:49 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/07 15:47:22 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/07 19:22:06 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_join		*check_param(t_lem *lem, t_string *string)
 			ret = get_sharp(lem, string, line);
 		else if (!check_room(lem, line, 0))
 			ret = 0;
+		if (ft_strlen(line) == 0)
+			break ;
 		ft_strdel(&line);
 		if (ret == 0)
 			return (NULL);
@@ -71,14 +73,17 @@ int		main(void)
 	t_lem		lem;
 	t_string	string;
 	t_join		*start_join;
+	t_list		*way;
 
 	ft_stringinit(&string);
 	ft_bzero(&lem, sizeof(t_lem));
 	if ((start_join = check_param(&lem, &string)) == NULL)
 		ft_error("error");
-	if (!resolve_lem(&lem, start_join))
+	if ((way = resolve_lem(&lem, start_join)) == NULL)
 		ft_error("error");
+	clear_join(&start_join);
 	ft_putstr(string.content);
+	ft_stringdelete(&string);
 	dprintf(1, "nb_room=%d, nb_ant=%d\n", lem.nb_room, lem.nb_ant);
 	return (0);
 }
