@@ -27,3 +27,46 @@ void		clear_room(t_room **way_room)
 	}
 	*way_room = NULL;
 }
+
+void		clear_join(t_join **join)
+{
+	t_join	*tmp;
+	t_join	*clear;
+
+	tmp = *join;
+	while (tmp)
+	{
+		tmp->r1 = NULL;
+		tmp->r2 = NULL;
+		clear = tmp;
+		tmp = tmp->next;
+		free(clear);
+	}
+	join = NULL;
+}
+
+void		clear_this_room(t_room **room, char *name)
+{
+	t_room 		*tmp;
+	t_room 		*clear;
+
+	tmp = *room;
+	while (tmp && tmp->next)
+	{
+		if (ft_strcmp(tmp->next->name, name) == 0)
+		{
+			clear = tmp->next;
+			tmp->next = clear->next;
+			ft_strdel(&clear->name);
+			free(clear);
+		}
+		tmp = tmp->next;
+	}
+	if (*room && ft_strcmp((*room)->name, name) == 0)
+	{
+		clear = *room;
+		*room = (*room)->next;
+		ft_strdel(&clear->name);
+		free(clear);
+	}
+}

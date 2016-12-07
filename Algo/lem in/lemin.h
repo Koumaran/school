@@ -26,12 +26,13 @@ typedef struct		s_ant
 
 typedef struct		s_room
 {
-	char			*name;
+	char				*name;
 	int				ant;
 	int				x;
 	int				y;
 	int				nb_join;
-	struct s_room	*next;
+	int				len;
+	struct s_room			*next;
 }					t_room;
 
 typedef struct		s_join
@@ -60,8 +61,12 @@ int				check_number(char *str);
 t_room			*check_room_name(t_lem *lem, char *str);
 t_room			*ft_pushback_room(t_room **room, char **split, t_room *cpy);
 t_room			*ft_pushfront_room(t_room **room, char **split, t_room *cpy);
+t_join			*new_join(t_room *r1, t_room *r2);
+void			ft_pushback_join(t_join **join, t_join *new);
 int				resolve_lem(t_lem *lem, int nb_join);
 int				get_solution(t_lem *lem, t_list *way);
 void			clear_room(t_room **way_room);
+void			clear_this_room(t_room **room, char *name);
+void			clear_join(t_join **join);
 
 #endif

@@ -16,45 +16,48 @@ t_room		*new_room(char	**split, t_room *src_room)
 {
 	t_room		*room;
 
-	if (!(room = (t_room*)malloc(sizeof(t_room))))
-		return (NULL);
-	ft_bzero(room, sizeof(t_room));
+	room = NULL;
 	if (split && *split)
 	{
+		if (!(room = (t_room*)ft_memalloc(sizeof(t_room))))
+			return (NULL);
 		room->name = ft_strdup(*split);
 		room->x = ft_atoi(split[1]);
 		room->y = ft_atoi(split[2]);
 	}
 	if (src_room)
 	{
+		if (!(room = (t_room*)ft_memalloc(sizeof(t_room))))
+			return (NULL);
 		room->name = ft_strdup(src_room->name);
 		room->x = src_room->x;
 		room->y = src_room->y;
 		room->nb_join = src_room->nb_join;
 	}
-	room->next = NULL;
 	return (room);
 }
 
 t_room		*ft_pushfront_room(t_room **room, char **split, t_room *src_room)
 {
 	t_room		*tmp;
-	t_room		*tmp2;
+	t_room		*new;
 
-	tmp2 = new_room(split, src_room);
-	if (*room)
+	new = new_room(split, src_room);
+	if (*room && new)
 	{
 		tmp = *room;
 		while (tmp)
 		{
-			if (tmp->name && ft_strcmp(tmp->name, tmp2->name) == 0)
+			if (tmp->name && ft_strcmp(tmp->name, new->name) == 0)
 				return (NULL);
 			tmp = tmp->next;
 		}
-		tmp2->next = *room;
+		new->next = *room;
+		*room = new;
 	}
-	*room = tmp2;
-	return (tmp2);
+	else if (new)
+		*room = new;
+	return (new);
 }
 
 t_room		*ft_pushback_room(t_room **room, char **split, t_room *src_room)

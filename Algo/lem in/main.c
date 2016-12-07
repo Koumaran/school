@@ -76,7 +76,6 @@ int		main(void)
 	ft_bzero(&lem, sizeof(t_lem));
 	if ((start_join = check_param(&lem, &string)) == 0)
 		ft_error("error");
-	ft_printf("\njoin=%d\n", start_join);
 	if (!resolve_lem(&lem, start_join))
 		ft_error("error");
 	ft_putstr(string.content);

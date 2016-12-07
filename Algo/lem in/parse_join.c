@@ -38,6 +38,21 @@ t_join		*new_join(t_room *r1, t_room *r2)
 	return (join);
 }
 
+void		ft_pushback_join(t_join **join_lst, t_join *new)
+{
+	t_join *tmp;
+
+	if (join_lst && *join_lst)
+	{
+		tmp = *join_lst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	else
+		*join_lst = new;
+}
+
 int		create_connection(t_lem *lem, t_room *r1, t_room *r2)
 {
 	t_join		*tmp;
