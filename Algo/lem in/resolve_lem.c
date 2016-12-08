@@ -85,11 +85,13 @@ int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 		if (check_if_exist(room, tmp_room, lem->start))
 		{
 			if (tmp_room != lem->end)
+			{
 				if (get_child(lem, room, tmp_room, join_lst) == 0)
 				{
 					clear_this_room(room, tmp_room->name);
 					(*room)->len--;
 				}
+		}
 		}
 		else
 		{

@@ -60,6 +60,7 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 	{
 		if (tmp != lst)
 		{
+			dprintf(1, "let compare room\n");
 			r2 = (t_room*)tmp->content;
 			len_r2 = r2->len;
 			while (r2->next)
@@ -68,14 +69,17 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 				len_r1 = r1->len;
 				while (r1->next)
 				{
+					dprintf(1, "r1=>%s r2=>%s\n", r1->name, r2->name);
 					if (ft_strcmp(r1->name, r2->name) == 0)
-						if (len_r1 > len_r2)
+						if (len_r1 >= len_r2)
 							return (lst);
 					r1 = r1->next;
 				}
 				r2 = r2->next;
 			}
 		}
+		else
+			dprintf(1, "same list\n");
 		tmp = tmp->next;
 	}
 	return (NULL);
@@ -86,6 +90,7 @@ void		check_way(t_list **way)
 	t_list		*big_tmp;
 	t_list		*tmp2;
 	t_list		*del;
+	t_room		*room;
 	
 	big_tmp = *way;
 	tmp2 = NULL;
@@ -93,10 +98,17 @@ void		check_way(t_list **way)
 	{
 		while (big_tmp)
 		{
+			dprintf(1, "begin get DEL\n");
 			del = check_double_roomlst(big_tmp, *way);
 			big_tmp = big_tmp->next;
 			if (del)
+			{
+				room = (t_room*)del->content;
+				dprintf(1, "DEl==>%s\n", room->name);
 				clear_lst(del, way);
+				dprintf(1, "DEL cleaned\n");
+				big_tmp = *way;
+			}
 		}
 	}
 }
