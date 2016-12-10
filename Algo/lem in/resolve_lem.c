@@ -81,7 +81,6 @@ int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 		tmp_room = (join->r1 == src_room) ? join->r2 : join->r1;
 		ft_pushback_room(room, NULL, tmp_room);
 		(*room)->len++;
-		dprintf(1, "src=%s =>child name=%s join r1=%s r2=%s\n", src_room->name, tmp_room->name, join->r1->name, join->r2->name);
 		if (check_if_exist(room, tmp_room, lem->start))
 		{
 			if (tmp_room != lem->end)
@@ -91,7 +90,7 @@ int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 					clear_this_room(room, tmp_room->name);
 					(*room)->len--;
 				}
-		}
+			}
 		}
 		else
 		{
@@ -111,7 +110,7 @@ t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 	t_join		*join;
 	t_room		*room;
 	t_room		*tmp_room;
-	t_list		*tmp;
+//	t_list		*tmp;
 
 	way = NULL;
 	join = start_join;
@@ -122,7 +121,6 @@ t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 		ft_pushback_join(&join_lst, new_join(join->r1, join->r2));
 		tmp_room = (join->r1 == lem->start) ? join->r2 : join->r1;
 		ft_pushback_room(&room, NULL, tmp_room);
-		dprintf(1, "begin name=%s\n", tmp_room->name);
 		room->len = 1;
 		if (tmp_room != lem->end)
 			if (tmp_room->nb_join < 2 || get_child(lem, &room, tmp_room, &join_lst) == 0)
@@ -132,18 +130,32 @@ t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 		join = join->next;
 		clear_join(&join_lst);
 	}
-	check_way(&way);
-	tmp = way;
+/*	tmp = way;
 	while (tmp)
 	{
 		room = (t_room*)tmp->content;
-		dprintf(1, "room_len = %d\n", room->len);
+		dprintf(1, "-------------------`%d\n", room->len);
 		while (room)
 		{
-			dprintf(1, "room_name=%s join=%d\n", room->name, room->nb_join);
+			dprintf(1, "name=>%s\n", room->name);
 			room = room->next;
 		}
 		tmp = tmp->next;
 	}
-	return (way);
+*/	check_way(&way);
+	clear_join(&lem->join);
+/*	dprintf(1, "AFTER CLEAN\n");
+	tmp = way;
+	while (tmp)
+	{
+		room = (t_room*)tmp->content;
+		dprintf(1, "=================%d\n", room->len);
+		while (room)
+		{
+			dprintf(1, "name=>%s\n", room->name);
+			room = room->next;
+		}
+		tmp = tmp->next;
+	}
+*/	return (way);
 }

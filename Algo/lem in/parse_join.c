@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 12:36:58 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/07 18:53:21 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/10 20:48:09 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,8 @@ int		check_connect(t_lem *lem, char *line)
 	if (!(r1 = check_room_name(lem, split[0])) ||
 			!(r2 = check_room_name(lem, split[1])))
 		return (0);
-	if (!create_connection(lem, r1, r2))
-		return (0);
-	lem->nb_join += 1;
+	if (create_connection(lem, r1, r2))
+		lem->nb_join += 1;
 	ft_memfree_2d(split);
 	return (1);
 }

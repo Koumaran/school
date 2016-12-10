@@ -6,12 +6,26 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 11:32:37 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/07 19:15:50 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/10 19:39:49 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
+void		clear_ant(t_ant **ant)
+{
+	t_ant		*tmp;
+	t_ant		*tmp2;
+
+	tmp = *ant;
+	while (tmp)
+	{
+		tmp2 = tmp;
+		tmp = tmp->next;
+		free(tmp2);
+	}
+	*ant = NULL;
+}
 void		clear_room(t_room **way_room)
 {
 	t_room		*room;

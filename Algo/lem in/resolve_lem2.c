@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:22:26 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/07 20:55:46 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/10 20:44:35 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void		clear_lst(t_list *del, t_list **way)
 			free(del);
 		}
 		else
+		{
 			tmp2 = tmp;
 			tmp = tmp->next;
+		}
 	}
 }
 
@@ -60,7 +62,6 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 	{
 		if (tmp != lst)
 		{
-			dprintf(1, "let compare room\n");
 			r2 = (t_room*)tmp->content;
 			len_r2 = r2->len;
 			while (r2->next)
@@ -69,7 +70,6 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 				len_r1 = r1->len;
 				while (r1->next)
 				{
-					dprintf(1, "r1=>%s r2=>%s\n", r1->name, r2->name);
 					if (ft_strcmp(r1->name, r2->name) == 0)
 						if (len_r1 >= len_r2)
 							return (lst);
@@ -78,8 +78,6 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 				r2 = r2->next;
 			}
 		}
-		else
-			dprintf(1, "same list\n");
 		tmp = tmp->next;
 	}
 	return (NULL);
@@ -87,27 +85,22 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 
 void		check_way(t_list **way)
 {
-	t_list		*big_tmp;
+	t_list		*tmp_way;
 	t_list		*tmp2;
 	t_list		*del;
-	t_room		*room;
 	
-	big_tmp = *way;
+	tmp_way = *way;
 	tmp2 = NULL;
-	if (big_tmp && big_tmp->next)
+	if (tmp_way && tmp_way->next)
 	{
-		while (big_tmp)
+		while (tmp_way)
 		{
-			dprintf(1, "begin get DEL\n");
-			del = check_double_roomlst(big_tmp, *way);
-			big_tmp = big_tmp->next;
+			del = check_double_roomlst(tmp_way, *way);
+			tmp_way = tmp_way->next;
 			if (del)
 			{
-				room = (t_room*)del->content;
-				dprintf(1, "DEl==>%s\n", room->name);
 				clear_lst(del, way);
-				dprintf(1, "DEL cleaned\n");
-				big_tmp = *way;
+				tmp_way = *way;
 			}
 		}
 	}

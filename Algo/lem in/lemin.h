@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:06:37 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/07 20:55:54 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/10 20:57:45 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 # include "libft/header/ft_printf.h"
 
 #include <stdio.h>
-typedef struct		s_ant
-{
-	int				nb;
-	char			*room;
-	struct s_ant	*next;
-}					t_ant;
-
 typedef struct		s_room
 {
 	char				*name;
@@ -42,6 +35,13 @@ typedef struct		s_join
 	struct s_join	*next;
 }					t_join;
 
+typedef struct		s_ant
+{
+	int				nb;
+	t_room			*room;
+	struct s_ant	*next;
+}					t_ant;
+
 typedef	struct		s_lem
 {
 	int				nb_room;
@@ -50,7 +50,6 @@ typedef	struct		s_lem
 	t_room			*start;
 	t_room			*end;
 	t_join			*join;
-	t_ant			*ant;
 	t_room			*room;
 }					t_lem;
 
@@ -69,5 +68,8 @@ int				get_solution(t_lem *lem, t_list *way);
 void			clear_room(t_room **way_room);
 void			clear_this_room(t_room **room, char *name);
 void			clear_join(t_join **join);
+void			clear_ant(t_ant **ant);
+t_room			*new_room(char **split, t_room *src_room);
+void			send_ants(t_lem *lem, t_list *way);
 
 #endif
