@@ -54,6 +54,7 @@ typedef	struct		s_lem
 }					t_lem;
 
 int				check_connect(t_lem *lem, char *line);
+char			**check_line(t_lem *lem, char *line);
 int				get_sharp(t_lem *lem, t_string *string, char *line);
 t_room			*check_room(t_lem *lem, char *line, int lvl);
 int				check_number(char *str);

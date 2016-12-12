@@ -53,7 +53,7 @@ t_join		*check_param(t_lem *lem, t_string *string)
 	while (get_next_line(0, &line))
 	{
 		ft_stringaddnl(string, line, ft_strlen(line));
-		if (ft_nb_of_word(line, '-') == 2)
+		if (ft_nb_of_word(line, '-') >= 2)
 			ret = check_connect(lem, line);
 		else if (*line == '#')
 			ret = get_sharp(lem, string, line);
