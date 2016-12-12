@@ -86,8 +86,10 @@ int		check_connect(t_lem *lem, char *line)
 	if (lem->nb_room < 2)
 		return (0);
 	if (ft_nb_of_word(line, '-') > 2)
+	{
 		if (!(split = check_line(lem, line)))
 			return (0);
+	}
 	else if (!(split = ft_strsplit(line, '-')))
 		return (0);
 	if (ft_strcmp(split[0], split[1]) == 0)

@@ -12,25 +12,28 @@ char	**check_line(t_lem *lem, char *line)
 	i = -1;
 	j = 0;
 	tmp = NULL;
+	r1 = NULL;
+	r2 = NULL;
 	while (line[++i])
 	{
-		if (line[i] == '-')
+		if (line[i] == '-' || !line[i + 1])
 		{
 
-			str = ft_strsub(line, j, i);
+			str = ft_strsub(line, j, i - j);
 			if (tmp && ft_strcmp(str, tmp) == 0)
 			{
+				dprintf(1, "tmp=%s\n", tmp);
 				ft_strdel(&str);
 				ft_strdel(&tmp);
 			}
-			if (i == ft_strlen(line) - 1 && !r1)
-				break ;
+			dprintf(1, "str=%s i=%d, j=%d\n", str, i, j);
 			if (str)
 			{	
 				if (!r1)
 				{
 					r1 = check_room_name(lem, str);
-					j = (r1) ? i : 0;
+					j = (r1) ? i + 1 : 0;
+					dprintf(1, "name r1==>%s\n", r1->name);
 				}
 				else
 				{
@@ -38,12 +41,13 @@ char	**check_line(t_lem *lem, char *line)
 					{
 						r1 = NULL;
 						j = 0;
-						i = -1;
+						i = (i == ft_strlen(line) -1) ? -1 : i;
 						tmp = ft_strdup(r1->name);
+						dprintf(1, "end i=%d, tmp=%s\n", i, tmp);
 					}
 				}
-				ft_strdel(&str);
 			}
+			ft_strdel(&str);
 		}
 	}
 	if (r1 && r2)
