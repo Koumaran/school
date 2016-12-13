@@ -87,7 +87,7 @@ int		check_connect(t_lem *lem, char *line)
 		return (0);
 	if (ft_nb_of_word(line, '-') > 2)
 	{
-		if (!(split = check_line(lem, line)))
+		if (!(split = check_line(lem, line, ft_strlen(line))))
 			return (0);
 	}
 	else if (!(split = ft_strsplit(line, '-')))
