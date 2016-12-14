@@ -12,6 +12,18 @@
 
 #include "lemin.h"
 
+void		bonus_lemin(t_lem *lem, t_string *string)
+{
+	if (lem->bonus_way)
+		add_way_bonus(string, lem);
+	if (lem->fd)
+	{
+		ft_putstr_fd(string->content, lem->fd);
+		close(lem->fd);
+	}
+
+}
+
 t_join		*last_check(t_lem *lem)
 {
 	t_join		*join;
@@ -74,24 +86,20 @@ int		main(void)
 	t_lem		lem;
 	t_string	string;
 	t_join		*start_join;
-	t_list		*way;
 
 	ft_stringinit(&string);
 	ft_bzero(&lem, sizeof(t_lem));
 	if ((start_join = check_param(&lem, &string)) == NULL)
 		ft_error("error");
-	if ((way = resolve_lem(&lem, start_join)) == NULL)
+	if ((lem.way = resolve_lem(&lem, start_join)) == NULL)
 		ft_error("error");
 	clear_join(&start_join);
 	ft_stringaddc(&string, '\n');
-	send_ants(&lem, way, &string);
+	send_ants(&lem, &string);
+	bonus_lemin(&lem, &string);
 	ft_printf("\n%s\n", string.content);
-	if (lem.fd)
-	{
-		ft_putstr_fd(string.content, lem.fd);
-		close(lem.fd);
-	}
 	ft_stringdelete(&string);
-	clear_way(&way);
+	clear_room(&lem.room);
+	clear_way(&lem.way);
 	return (0);
 }

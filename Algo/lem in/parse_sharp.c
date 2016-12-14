@@ -20,10 +20,14 @@ void		get_bonus(t_string *string, t_lem *lem, char **line)
 		get_next_line(0, line);
 		ft_stringaddnl(string, *line, ft_strlen(*line));
 		if ((lem->fd = open(*line, O_CREAT | O_WRONLY)) < 0)
-			lem->fd = open(*line, O_TRUNC | O_WRONLY);
-		if (chmod(*line, S_IRUSR | S_IRGRP | S_IROTH) < 0)
+			lem->fd = open(*line, O_RDONLY | O_WRONLY | O_TRUNC);
+		if (chmod(*line, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) < 0)
 			ft_error("error chmod");
 	}
+	else if (ft_strcmp(*line, "##way") == 0)
+		lem->bonus_way = 1;
+	else if (ft_strcmp(*line, "##step") == 0)
+		lem->bonus_step = 1;
 }
 
 int		get_sharp(t_lem *lem, t_string *string, char **line)

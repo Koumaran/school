@@ -85,7 +85,7 @@ void		move_ant(t_ant **ant, t_list *way, t_room *start)
 	}
 }
 
-void		send_ants(t_lem *lem, t_list *way, t_string *string)
+void		send_ants(t_lem *lem, t_string *string)
 {
 	t_ant		*ant;
 	t_ant		*tmp_ant;
@@ -95,7 +95,7 @@ void		send_ants(t_lem *lem, t_list *way, t_string *string)
 		ft_error("error");
 	while (!ant_sended(ant, lem->end))
 	{
-		move_ant(&ant, way, lem->start);
+		move_ant(&ant, lem->way, lem->start);
 		tmp_ant = ant;
 		while (tmp_ant)
 		{
@@ -112,5 +112,4 @@ void		send_ants(t_lem *lem, t_list *way, t_string *string)
 		ft_stringaddc(string, '\n');
 	}
 	clear_ant(&ant);
-	clear_room(&lem->room);
 }

@@ -48,10 +48,13 @@ typedef	struct		s_lem
 	int				nb_ant;
 	int				nb_join;
 	int				fd;
+	int				bonus_way;
+	int				bonus_step;
 	t_room			*start;
 	t_room			*end;
 	t_join			*join;
 	t_room			*room;
+	t_list			*way;
 }					t_lem;
 
 int				check_connect(t_lem *lem, char *line);
@@ -73,6 +76,7 @@ void			clear_join(t_join **join);
 void			clear_ant(t_ant **ant);
 void			clear_way(t_list **way);
 t_room			*new_room(char **split, t_room *src_room);
-void			send_ants(t_lem *lem, t_list *way, t_string *string);
+void			send_ants(t_lem *lem, t_string *string);
+void			add_way_bonus(t_string *string, t_lem *lem);
 
 #endif
