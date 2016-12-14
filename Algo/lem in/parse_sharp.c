@@ -12,26 +12,44 @@
 
 #include "lemin.h"
 
-int		get_sharp(t_lem *lem, t_string *string, char *line)
+void		get_bonus(t_string *string, t_lem *lem, char **line)
+{
+	if (ft_strcmp(*line, "##file") == 0)
+	{
+		ft_strdel(line);
+		get_next_line(0, line);
+		ft_stringaddnl(string, *line, ft_strlen(*line));
+		if ((lem->fd = open(*line, O_CREAT | O_WRONLY)) < 0)
+			lem->fd = open(*line, O_TRUNC | O_WRONLY);
+		if (chmod(*line, S_IRUSR | S_IRGRP | S_IROTH) < 0)
+			ft_error("error chmod");
+	}
+}
+
+int		get_sharp(t_lem *lem, t_string *string, char **line)
 {
 	t_room		*room;
 
-	if (ft_strcmp(line, "##start") == 0)
+	if (ft_strcmp(*line, "##start") == 0)
 	{
-		get_next_line(0, &line);
-		ft_stringaddnl(string, line, ft_strlen(line));
-		if (!(room = check_room(lem, line, 1)))
+		ft_strdel(line);
+		get_next_line(0, line);
+		ft_stringaddnl(string, *line, ft_strlen(*line));
+		if (!(room = check_room(lem, *line, 1)))
 			return (0);
 		lem->start = room;
 		lem->start->ant = lem->nb_ant;
 	}
-	else if (ft_strcmp(line, "##end") == 0)
+	else if (ft_strcmp(*line, "##end") == 0)
 	{
-		get_next_line(0, &line);
-		ft_stringaddnl(string, line, ft_strlen(line));
-		if (!(room = check_room(lem, line, 0)))
+		ft_strdel(line);
+		get_next_line(0, line);
+		ft_stringaddnl(string, *line, ft_strlen(*line));
+		if (!(room = check_room(lem, *line, 0)))
 			return (0);
 		lem->end = room;;
 	}
+	else
+		get_bonus(string, lem, line);
 	return (1);
 }

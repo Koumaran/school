@@ -124,5 +124,6 @@ void						ft_stringadd(t_string *string, char *str, int n);
 void						ft_stringaddnl(t_string *string, char *str, int n);
 int							ft_stringext(t_string *string, int need);
 void						ft_stringdelete(t_string *string);
+void						ft_stringaddnbr(t_string *string, int nb);
 
 #endif

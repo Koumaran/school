@@ -85,7 +85,7 @@ void		move_ant(t_ant **ant, t_list *way, t_room *start)
 	}
 }
 
-void		send_ants(t_lem *lem, t_list *way)
+void		send_ants(t_lem *lem, t_list *way, t_string *string)
 {
 	t_ant		*ant;
 	t_ant		*tmp_ant;
@@ -101,13 +101,15 @@ void		send_ants(t_lem *lem, t_list *way)
 		{
 			if (tmp_ant->room && tmp_ant->room != lem->start)
 			{
-				ft_printf("L%d-%s", tmp_ant->nb, tmp_ant->room->name);
+				ft_printf_string(string, "L%d-%s", tmp_ant->nb, tmp_ant->room->name);
+				
 				if (tmp_ant->next && tmp_ant->next->room != lem->start)
-					ft_putchar(' ');
+					ft_stringaddc(string, ' ');
+
 			}
 			tmp_ant = tmp_ant->next;
 		}
-		ft_putchar('\n');
+		ft_stringaddc(string, '\n');
 	}
 	clear_ant(&ant);
 	clear_room(&lem->room);

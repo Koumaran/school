@@ -110,7 +110,6 @@ t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 	t_join		*join;
 	t_room		*room;
 	t_room		*tmp_room;
-//	t_list		*tmp;
 
 	way = NULL;
 	join = start_join;
@@ -126,36 +125,14 @@ t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 			if (tmp_room->nb_join < 2 || get_child(lem, &room, tmp_room, &join_lst) == 0)
 				clear_room(&room);
 		if (room)
+		{
 			ft_lstadd_back(&way, ft_lstnew((void*)room, sizeof(t_room)));
+			free(room);
+		}
 		join = join->next;
 		clear_join(&join_lst);
 	}
-/*	tmp = way;
-	while (tmp)
-	{
-		room = (t_room*)tmp->content;
-		dprintf(1, "-------------------`%d\n", room->len);
-		while (room)
-		{
-			dprintf(1, "name=>%s\n", room->name);
-			room = room->next;
-		}
-		tmp = tmp->next;
-	}
-*/	check_way(&way);
+	check_way(&way);
 	clear_join(&lem->join);
-/*	dprintf(1, "AFTER CLEAN\n");
-	tmp = way;
-	while (tmp)
-	{
-		room = (t_room*)tmp->content;
-		dprintf(1, "=================%d\n", room->len);
-		while (room)
-		{
-			dprintf(1, "name=>%s\n", room->name);
-			room = room->next;
-		}
-		tmp = tmp->next;
-	}
-*/	return (way);
+	return (way);
 }

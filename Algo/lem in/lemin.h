@@ -47,6 +47,7 @@ typedef	struct		s_lem
 	int				nb_room;
 	int				nb_ant;
 	int				nb_join;
+	int				fd;
 	t_room			*start;
 	t_room			*end;
 	t_join			*join;
@@ -55,7 +56,7 @@ typedef	struct		s_lem
 
 int				check_connect(t_lem *lem, char *line);
 char			**check_line(t_lem *lem, char *line, int len);
-int				get_sharp(t_lem *lem, t_string *string, char *line);
+int				get_sharp(t_lem *lem, t_string *string, char **line);
 t_room			*check_room(t_lem *lem, char *line, int lvl);
 int				check_number(char *str);
 t_room			*check_room_name(t_lem *lem, char *str);
@@ -70,7 +71,8 @@ void			clear_room(t_room **way_room);
 void			clear_this_room(t_room **room, char *name);
 void			clear_join(t_join **join);
 void			clear_ant(t_ant **ant);
+void			clear_way(t_list **way);
 t_room			*new_room(char **split, t_room *src_room);
-void			send_ants(t_lem *lem, t_list *way);
+void			send_ants(t_lem *lem, t_list *way, t_string *string);
 
 #endif

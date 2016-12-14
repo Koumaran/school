@@ -56,7 +56,7 @@ t_join		*check_param(t_lem *lem, t_string *string)
 		if (ft_nb_of_word(line, '-') >= 2 && ft_nb_of_word(line, ' ') < 2)
 			ret = check_connect(lem, line);
 		else if (*line == '#')
-			ret = get_sharp(lem, string, line);
+			ret = get_sharp(lem, string, &line);
 		else if (!check_room(lem, line, 0))
 			ret = 0;
 		if (ft_strlen(line) == 0)
@@ -65,6 +65,7 @@ t_join		*check_param(t_lem *lem, t_string *string)
 		if (ret == 0)
 			return (NULL);
 	}
+	ft_strdel(&line);
 	return (last_check(lem));
 }
 
@@ -82,8 +83,15 @@ int		main(void)
 	if ((way = resolve_lem(&lem, start_join)) == NULL)
 		ft_error("error");
 	clear_join(&start_join);
+	ft_stringaddc(&string, '\n');
+	send_ants(&lem, way, &string);
 	ft_printf("\n%s\n", string.content);
+	if (lem.fd)
+	{
+		ft_putstr_fd(string.content, lem.fd);
+		close(lem.fd);
+	}
 	ft_stringdelete(&string);
-	send_ants(&lem, way);
+	clear_way(&way);
 	return (0);
 }

@@ -12,6 +12,27 @@
 
 #include "lemin.h"
 
+void		clear_way(t_list **way)
+{
+	t_list	*tmp;
+	t_list	*tmp2;
+	t_room	*room;
+
+	if (way && *way)
+	{
+		tmp = *way;
+		while (tmp)
+		{
+			tmp2 = tmp;
+			tmp = tmp->next;
+			room = (t_room*)tmp2->content;
+			clear_room(&room);
+			free(tmp2);
+		}
+		*way = NULL;
+	}
+}
+
 void		clear_ant(t_ant **ant)
 {
 	t_ant		*tmp;

@@ -53,6 +53,7 @@ typedef struct				s_ft
 }							t_ft;
 
 int							ft_printf(const char *restrict fmt, ...);
+int							ft_printf_string(t_string *string, const char *restrict fmt, ...);
 int							parse(va_list ap, char *fmt, t_string *string);
 int							parse_convert(va_list ap, char *fmt,
 							t_boxpf *boxpf);

@@ -12,6 +12,15 @@
 
 #include "libft.h"
 
+void	ft_stringaddnbr(t_string *string, int nb)
+{
+	char	*str;
+
+	str = ft_itoa(nb);
+	ft_stringadd(string, str, ft_strlen(str));
+	ft_strdel(&str);
+}
+
 void	ft_stringaddc(t_string *string, char c)
 {
 	if (!ft_stringext(string, 1))
