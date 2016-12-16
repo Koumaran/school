@@ -6,25 +6,26 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 13:34:49 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/10 20:59:08 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/16 15:20:48 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void		bonus_lemin(t_lem *lem, t_string *string)
+static void		bonus_lemin(t_lem *lem, t_string *string, int step)
 {
 	if (lem->bonus_way)
 		add_way_bonus(string, lem);
+	if (lem->step)
+		ft_printf_string(string, "Number of step: %d\n", step);
 	if (lem->fd)
 	{
 		ft_putstr_fd(string->content, lem->fd);
 		close(lem->fd);
 	}
-
 }
 
-t_join		*last_check(t_lem *lem)
+static t_join	*last_check(t_lem *lem)
 {
 	t_join		*join;
 	t_join		*start;
@@ -50,13 +51,11 @@ t_join		*last_check(t_lem *lem)
 	return (NULL);
 }
 
-t_join		*check_param(t_lem *lem, t_string *string)
+static t_join	*check_param(t_lem *lem, t_string *string, int ret)
 {
 	char	*line;
-	int		ret;
 
 	line = NULL;
-	ret = 1;
 	if (get_next_line(0, &line) <= 0 || !check_number(line) ||
 			((lem->nb_ant = ft_getnbr(line)) < 1))
 		return (NULL);
@@ -65,7 +64,7 @@ t_join		*check_param(t_lem *lem, t_string *string)
 	while (get_next_line(0, &line))
 	{
 		ft_stringaddnl(string, line, ft_strlen(line));
-		if (ft_nb_of_word(line, '-') >= 2 && ft_nb_of_word(line, ' ') < 2)
+		if (ft_nb_of_char(line, '-') >= 1 && ft_nb_of_word(line, ' ') < 2)
 			ret = check_connect(lem, line);
 		else if (*line == '#')
 			ret = get_sharp(lem, string, &line);
@@ -81,25 +80,38 @@ t_join		*check_param(t_lem *lem, t_string *string)
 	return (last_check(lem));
 }
 
-int		main(void)
+static void		clear_lemin(t_lem *lem, t_string *string)
+{
+	clear_join(&lem->join);
+	ft_stringdelete(string);
+	clear_room(&lem->room);
+	clear_way(&lem->way);
+}
+
+int				main(void)
 {
 	t_lem		lem;
 	t_string	string;
 	t_join		*start_join;
+	int			step;
 
+	step = 0;
 	ft_stringinit(&string);
 	ft_bzero(&lem, sizeof(t_lem));
-	if ((start_join = check_param(&lem, &string)) == NULL)
+	if ((start_join = check_param(&lem, &string, 1)) == NULL)
 		ft_error("error");
-	if ((lem.way = resolve_lem(&lem, start_join)) == NULL)
+	resolve_lem(&lem, start_join, NULL);
+	check_way(&lem.way);
+	if (!lem.way)
 		ft_error("error");
 	clear_join(&start_join);
 	ft_stringaddc(&string, '\n');
-	send_ants(&lem, &string);
-	bonus_lemin(&lem, &string);
+	if (lem.map && !lem.step)
+		add_map(&lem, &string);
+	else
+		send_ants(&lem, &string, &step);
+	bonus_lemin(&lem, &string, step);
 	ft_printf("\n%s\n", string.content);
-	ft_stringdelete(&string);
-	clear_room(&lem.room);
-	clear_way(&lem.way);
+	clear_lemin(&lem, &string);
 	return (0);
 }

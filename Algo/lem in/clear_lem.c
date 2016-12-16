@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 11:32:37 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/10 19:39:49 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/15 18:37:21 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		clear_ant(t_ant **ant)
 	}
 	*ant = NULL;
 }
+
 void		clear_room(t_room **way_room)
 {
 	t_room		*room;
@@ -82,8 +83,8 @@ void		clear_join(t_join **join)
 
 void		clear_this_room(t_room **room, char *name)
 {
-	t_room 		*tmp;
-	t_room 		*clear;
+	t_room		*tmp;
+	t_room		*clear;
 
 	tmp = *room;
 	while (tmp && tmp->next)
@@ -94,14 +95,17 @@ void		clear_this_room(t_room **room, char *name)
 			tmp->next = clear->next;
 			ft_strdel(&clear->name);
 			free(clear);
+			(*room)->len--;
 		}
 		tmp = tmp->next;
 	}
 	if (*room && ft_strcmp((*room)->name, name) == 0)
 	{
 		clear = *room;
+		(*room)->next->len = (*room)->len;
 		*room = (*room)->next;
 		ft_strdel(&clear->name);
 		free(clear);
+		(*room)->len--;
 	}
 }

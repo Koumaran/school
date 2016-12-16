@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 15:46:07 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/10 12:41:19 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/15 20:59:52 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct				s_string
+typedef struct		s_string
 {
-	char					*content;
-	int						size;
-	int						alloc_size;
-}							t_string;
+	char			*content;
+	int				size;
+	int				alloc_size;
+}					t_string;
 
 void				ft_putstr(char const *s);
 void				ft_putnbr(int nb);
@@ -112,18 +112,19 @@ void				ft_putnbr_base(int nbr, char *base);
 int					ft_getnbr(char const *s);
 int					get_next_line(int const fd, char **line);
 int					ft_nb_of_word(char const *s, char c);
+int					ft_nb_of_char(char const *s, char c);
 char				*ft_putchar_str(char *str, char c);
 void				ft_strupper(char *str);
 void				ft_strlower(char *str);
 void				ft_error(char *str);
 size_t				ft_strtablen(char **tab);
 
-void						ft_stringinit(t_string *string);
-void						ft_stringaddc(t_string *string, char c);
-void						ft_stringadd(t_string *string, char *str, int n);
-void						ft_stringaddnl(t_string *string, char *str, int n);
-int							ft_stringext(t_string *string, int need);
-void						ft_stringdelete(t_string *string);
-void						ft_stringaddnbr(t_string *string, int nb);
+void				ft_stringinit(t_string *string);
+void				ft_stringaddc(t_string *string, char c);
+void				ft_stringadd(t_string *string, char *str, int n);
+void				ft_stringaddnl(t_string *string, char *str, int n);
+int					ft_stringext(t_string *string, int need);
+void				ft_stringdelete(t_string *string);
+void				ft_stringaddnbr(t_string *string, int nb);
 
 #endif

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_string.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/15 19:23:37 by jsivanes          #+#    #+#             */
+/*   Updated: 2016/12/15 19:29:51 by jsivanes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-static int	printf_print(t_string *string, t_string *string_p)
+static int		printf_print(t_string *string, t_string *string_p)
 {
 	if (string_p->content)
 	{
@@ -10,7 +22,8 @@ static int	printf_print(t_string *string, t_string *string_p)
 	return (string_p->size);
 }
 
-int	ft_printf_string(t_string *string, const char *restrict fmt, ...)
+int				ft_printf_string(t_string *string,\
+				const char *restrict fmt, ...)
 {
 	va_list		ap;
 	t_string	string_p;
@@ -25,7 +38,7 @@ int	ft_printf_string(t_string *string, const char *restrict fmt, ...)
 			fmt += parse(ap, (char*)fmt, &string_p);
 		else if (*fmt != '%' && *fmt)
 			ft_stringaddc(&string_p, *fmt);
-			fmt++;
+		fmt++;
 	}
 	va_end(ap);
 	return (printf_print(string, &string_p));

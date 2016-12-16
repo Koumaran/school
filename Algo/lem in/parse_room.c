@@ -6,13 +6,13 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:06:35 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/23 13:54:14 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/15 19:24:47 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-t_room		*new_room(char	**split, t_room *src_room)
+t_room		*new_room(char **split, t_room *src_room)
 {
 	t_room		*room;
 
@@ -64,7 +64,7 @@ t_room		*ft_pushback_room(t_room **room, char **split, t_room *src_room)
 {
 	t_room		*tmp;
 	t_room		*new;
-	
+
 	new = new_room(split, src_room);
 	if (*room)
 	{

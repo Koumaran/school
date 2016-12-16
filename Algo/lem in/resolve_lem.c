@@ -1,42 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   resolve_lem.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/15 18:37:56 by jsivanes          #+#    #+#             */
+/*   Updated: 2016/12/16 14:18:04 by jsivanes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
-t_join		*get_join(t_lem *lem, t_room *room, t_join *to_pass)
+static t_join	*get_join(t_lem *lem, t_room *room, t_join *to_pass)
 {
 	t_join		*join;
-	t_join		*tmp;
 
 	join = lem->join;
 	while (join)
 	{
-		tmp = to_pass;
 		if (join->r1 == room)
-		{
-			while (tmp)
-			{
-				if (!ft_strcmp(tmp->r2->name, join->r2->name))
-					break ;
-				tmp = tmp->next;
-			}
-			if (!tmp)
+			if (!get_join2(to_pass, join->r2, 1))
 				return (join);
-		}
 		if (join->r2 == room)
-		{
-			while (tmp)
-			{
-				if (!ft_strcmp(tmp->r1->name, join->r1->name))
-					break ;
-				tmp = tmp->next;
-			}
-			if (!tmp)
+			if (!get_join2(to_pass, join->r1, 2))
 				return (join);
-		}
 		join = join->next;
 	}
 	return (NULL);
 }
 
-int			check_if_exist(t_room **room, t_room *get, t_room *start)
+static int		check_if_exist(t_room **room, t_room *get, t_room *start)
 {
 	t_room		*tmp;
 	int			i;
@@ -56,7 +50,7 @@ int			check_if_exist(t_room **room, t_room *get, t_room *start)
 	return (1);
 }
 
-int			check_if_end(t_room *room, t_room *end)
+static int		check_if_end(t_room *room, t_room *end)
 {
 	t_room *tmp;
 
@@ -70,7 +64,8 @@ int			check_if_end(t_room *room, t_room *end)
 	return (0);
 }
 
-int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
+static int		get_child(t_lem *lem, t_room **room, \
+		t_room *src_room, t_join **join_lst)
 {
 	t_join		*join;
 	t_room		*tmp_room;
@@ -84,34 +79,23 @@ int			get_child(t_lem *lem, t_room **room, t_room *src_room, t_join **join_lst)
 		if (check_if_exist(room, tmp_room, lem->start))
 		{
 			if (tmp_room != lem->end)
-			{
 				if (get_child(lem, room, tmp_room, join_lst) == 0)
-				{
 					clear_this_room(room, tmp_room->name);
-					(*room)->len--;
-				}
-			}
 		}
 		else
-		{
 			clear_this_room(room, tmp_room->name);
-			(*room)->len--;
-		}
 		if (check_if_end(*room, lem->end))
 			return ((*room)->len);
 	}
 	return (0);
 }
 
-t_list			*resolve_lem(t_lem *lem, t_join *start_join)
+void			resolve_lem(t_lem *lem, t_join *start_join, t_room *tmp_room)
 {
-	t_list		*way;
 	t_join		*join_lst;
 	t_join		*join;
 	t_room		*room;
-	t_room		*tmp_room;
 
-	way = NULL;
 	join = start_join;
 	while (join)
 	{
@@ -122,17 +106,15 @@ t_list			*resolve_lem(t_lem *lem, t_join *start_join)
 		ft_pushback_room(&room, NULL, tmp_room);
 		room->len = 1;
 		if (tmp_room != lem->end)
-			if (tmp_room->nb_join < 2 || get_child(lem, &room, tmp_room, &join_lst) == 0)
+			if (tmp_room->nb_join < 2 ||\
+					get_child(lem, &room, tmp_room, &join_lst) == 0)
 				clear_room(&room);
 		if (room)
 		{
-			ft_lstadd_back(&way, ft_lstnew((void*)room, sizeof(t_room)));
+			ft_lstadd_back(&lem->way, ft_lstnew((void*)room, sizeof(t_room)));
 			free(room);
 		}
 		join = join->next;
 		clear_join(&join_lst);
 	}
-	check_way(&way);
-	clear_join(&lem->join);
-	return (way);
 }

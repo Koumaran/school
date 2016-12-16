@@ -6,13 +6,13 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 11:57:31 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/23 12:24:07 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/16 15:28:46 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void		get_bonus(t_string *string, t_lem *lem, char **line)
+static void		get_bonus(t_string *string, t_lem *lem, char **line)
 {
 	if (ft_strcmp(*line, "##file") == 0)
 	{
@@ -27,10 +27,12 @@ void		get_bonus(t_string *string, t_lem *lem, char **line)
 	else if (ft_strcmp(*line, "##way") == 0)
 		lem->bonus_way = 1;
 	else if (ft_strcmp(*line, "##step") == 0)
-		lem->bonus_step = 1;
+		lem->step = 1;
+	else if (!ft_strcmp(*line, "##map"))
+		lem->map = 1;
 }
 
-int		get_sharp(t_lem *lem, t_string *string, char **line)
+int				get_sharp(t_lem *lem, t_string *string, char **line)
 {
 	t_room		*room;
 
@@ -42,7 +44,6 @@ int		get_sharp(t_lem *lem, t_string *string, char **line)
 		if (!(room = check_room(lem, *line, 1)))
 			return (0);
 		lem->start = room;
-		lem->start->ant = lem->nb_ant;
 	}
 	else if (ft_strcmp(*line, "##end") == 0)
 	{
@@ -51,7 +52,7 @@ int		get_sharp(t_lem *lem, t_string *string, char **line)
 		ft_stringaddnl(string, *line, ft_strlen(*line));
 		if (!(room = check_room(lem, *line, 0)))
 			return (0);
-		lem->end = room;;
+		lem->end = room;
 	}
 	else
 		get_bonus(string, lem, line);

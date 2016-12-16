@@ -6,55 +6,51 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 19:22:26 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/10 20:44:35 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/16 15:14:27 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void		clear_lst(t_list *del, t_list **way)
+int				get_join2(t_join *to_pass, t_room *room, int ref)
 {
-	t_room		*room;
-	t_list		*tmp;
-	t_list		*tmp2;
+	t_join		*tmp;
 
-	if (*way == del)
-	{
-		del = *way;
-		*way = (*way)->next;
-		room = (t_room*)del->content;
-		clear_room(&room);
-		free(del);
-		return ;
-	}
-	tmp = *way;
-	tmp2 = NULL;
+	tmp = to_pass;
 	while (tmp)
 	{
-		if (tmp == del)
-		{
-			if (tmp2)
-				tmp2->next = tmp->next;
-			del = tmp;
-			tmp = tmp->next;
-			room = (t_room*)del->content;
-			clear_room(&room);
-			free(del);
-		}
-		else
-		{
-			tmp2 = tmp;
-			tmp = tmp->next;
-		}
+		if (ref == 1)
+			if (!ft_strcmp(tmp->r2->name, room->name))
+				return (1);
+		if (ref == 2)
+			if (!ft_strcmp(tmp->r1->name, room->name))
+				return (1);
+		tmp = tmp->next;
 	}
+	return (0);
 }
 
-t_list		*check_double_roomlst(t_list *lst, t_list *way)
+static int		check_double_roomlst2(t_room *r1, t_room *r2, int r2_len)
 {
-	t_room		*r1;
+	t_room	*tmp;
+	int		r1_len;
+
+	tmp = r1;
+	r1_len = r1->len;
+	while (tmp->next)
+	{
+		if (ft_strcmp(tmp->name, r2->name) == 0)
+			if (r1_len >= r2_len)
+				return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+static t_list	*check_double_roomlst(t_list *lst, t_list *way)
+{
 	t_room		*r2;
 	t_list		*tmp;
-	int			len_r1;
 	int			len_r2;
 
 	tmp = way;
@@ -66,15 +62,8 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 			len_r2 = r2->len;
 			while (r2->next)
 			{
-				r1 = (t_room*)lst->content;
-				len_r1 = r1->len;
-				while (r1->next)
-				{
-					if (ft_strcmp(r1->name, r2->name) == 0)
-						if (len_r1 >= len_r2)
-							return (lst);
-					r1 = r1->next;
-				}
+				if (check_double_roomlst2((t_room*)lst->content, r2, len_r2))
+					return (lst);
 				r2 = r2->next;
 			}
 		}
@@ -83,14 +72,12 @@ t_list		*check_double_roomlst(t_list *lst, t_list *way)
 	return (NULL);
 }
 
-void		check_way(t_list **way)
+void			check_way(t_list **way)
 {
 	t_list		*tmp_way;
-	t_list		*tmp2;
 	t_list		*del;
-	
+
 	tmp_way = *way;
-	tmp2 = NULL;
 	if (tmp_way && tmp_way->next)
 	{
 		while (tmp_way)

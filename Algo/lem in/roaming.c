@@ -6,13 +6,13 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 18:51:32 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/10 20:58:59 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/16 15:28:59 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-t_ant		*new_ant(t_room *start, int nb)
+static t_ant	*new_ant(t_room *start, int nb)
 {
 	t_ant	*new;
 
@@ -24,7 +24,7 @@ t_ant		*new_ant(t_room *start, int nb)
 	return (new);
 }
 
-t_ant		*init_ant(t_room *start, int nb_ant)
+static t_ant	*init_ant(t_room *start, int nb_ant)
 {
 	t_ant	*tmp;
 	t_ant	*ant;
@@ -43,7 +43,7 @@ t_ant		*init_ant(t_room *start, int nb_ant)
 	return (ant);
 }
 
-int			ant_sended(t_ant *ant, t_room *end)
+static int		ant_sended(t_ant *ant, t_room *end)
 {
 	t_ant		*tmp;
 
@@ -57,7 +57,7 @@ int			ant_sended(t_ant *ant, t_room *end)
 	return (1);
 }
 
-void		move_ant(t_ant **ant, t_list *way, t_room *start)
+static void		move_ant(t_ant **ant, t_list *way, t_room *start)
 {
 	t_ant		*tmp_ant;
 	t_list		*tmp_lst;
@@ -85,7 +85,7 @@ void		move_ant(t_ant **ant, t_list *way, t_room *start)
 	}
 }
 
-void		send_ants(t_lem *lem, t_string *string)
+void			send_ants(t_lem *lem, t_string *string, int *step)
 {
 	t_ant		*ant;
 	t_ant		*tmp_ant;
@@ -101,15 +101,15 @@ void		send_ants(t_lem *lem, t_string *string)
 		{
 			if (tmp_ant->room && tmp_ant->room != lem->start)
 			{
-				ft_printf_string(string, "L%d-%s", tmp_ant->nb, tmp_ant->room->name);
-				
+				ft_printf_string(string, "L%d-%s",\
+						tmp_ant->nb, tmp_ant->room->name);
 				if (tmp_ant->next && tmp_ant->next->room != lem->start)
 					ft_stringaddc(string, ' ');
-
 			}
 			tmp_ant = tmp_ant->next;
 		}
 		ft_stringaddc(string, '\n');
+		*step = *step + 1;
 	}
 	clear_ant(&ant);
 }
