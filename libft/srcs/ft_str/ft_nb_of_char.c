@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_nb_of_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/18 15:26:27 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/22 10:52:37 by jsivanes         ###   ########.fr       */
+/*   Created: 2016/12/15 20:57:21 by jsivanes          #+#    #+#             */
+/*   Updated: 2016/12/15 21:00:32 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstnew(void const *content, size_t content_size)
+int		ft_nb_of_char(char const *s, char c)
 {
-	t_list	*tmp;
+	int		nb;
 
-	tmp = NULL;
-	tmp = (t_list *)malloc(sizeof(t_list));
-	if (!tmp)
-		return (NULL);
-	tmp->content = NULL;
-	tmp->next = NULL;
-	if (!content)
+	nb = 0;
+	while (*s)
 	{
-		tmp->content_size = 0;
-		return (tmp);
+		if (*s == c)
+			nb++;
+		s++;
 	}
-	tmp->content = malloc(content_size);
-	ft_memcpy(tmp->content, content, content_size);
-	tmp->content_size = content_size;
-	return (tmp);
+	return (nb);
 }

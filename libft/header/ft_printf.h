@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/17 17:39:12 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/11/10 12:41:15 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/15 19:22:38 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct				s_ft
 }							t_ft;
 
 int							ft_printf(const char *restrict fmt, ...);
+int							ft_printf_string(t_string *string,\
+							const char *restrict fmt, ...);
 int							parse(va_list ap, char *fmt, t_string *string);
 int							parse_convert(va_list ap, char *fmt,
 							t_boxpf *boxpf);
