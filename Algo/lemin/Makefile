@@ -6,7 +6,7 @@
 #    By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/15 16:24:50 by jsivanes          #+#    #+#              #
-#    Updated: 2016/12/16 20:41:04 by jsivanes         ###   ########.fr        #
+#    Updated: 2016/12/15 19:30:15 by jsivanes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(NAME): $(OBJ)
 	@$(CC) -o $(NAME) $^ $(HEAD) $(LIBFT)
 
 %.o: %.c
-	$(CC) $(HEAD) -I$(H_LIBFT) -o $@ -c $<
+	@$(CC) -I$(HEAD) -I$(H_LIBFT) -o $@ -c $<
 
 .PHONY: clean fclean re
 

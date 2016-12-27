@@ -6,7 +6,7 @@
 /*   By: jsivanes <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 11:57:31 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/16 15:28:46 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/26 21:58:10 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void		get_bonus(t_string *string, t_lem *lem, char **line)
 	{
 		ft_strdel(line);
 		get_next_line(0, line);
+		if (!*line)
+			ft_error("Need a name for file");
 		ft_stringaddnl(string, *line, ft_strlen(*line));
 		if ((lem->fd = open(*line, O_CREAT | O_WRONLY)) < 0)
 			lem->fd = open(*line, O_RDONLY | O_WRONLY | O_TRUNC);
