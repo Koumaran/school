@@ -6,7 +6,7 @@
 /*   By: jsivanes <jsivanes42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:06:00 by jsivanes          #+#    #+#             */
-/*   Updated: 2016/12/15 20:27:45 by jsivanes         ###   ########.fr       */
+/*   Updated: 2016/12/28 12:59:28 by jsivanes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include "libft/header/libft.h"
 # include "libft/header/ft_printf.h"
 # include "sources/minilibx_macos/mlx.h"
-# include <stdio.h>
 
 # define WIN_SIZEX 2048
 # define WIN_SIZEY 1152
